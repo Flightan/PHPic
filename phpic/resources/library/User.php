@@ -28,7 +28,7 @@ class User {
 	
 	public function getAlbumList()
 	{
-		
+		return $this->albums;
 	}
 	
 	public function addAlbum($album)

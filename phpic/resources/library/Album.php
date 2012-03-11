@@ -71,15 +71,15 @@ class Album {
 	
 	public function getList()
 	{
-		
+		return $this->pictures;
 	}
 	
 	public function readXML($xml)
 	{
 		$count = 0;
 		
-		$theme = $xml->album->getAttribute("theme");
-		$display = $xml->album->getAttribute("display");
+		$this->theme = $xml->album->getAttribute("theme");
+		$this->display = $xml->album->getAttribute("display");
 		
 		foreach ($xml->album->picture as $value)
 		{
