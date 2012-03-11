@@ -42,9 +42,15 @@ class User {
 		
 		foreach ($xml->collection->album as $value)
 		{
+			$count2 = 0;
 			$a = new Album();
 			$a->setTitle($value->getAttribute("title"));
 			$a->setAuthor($value->getAttribute("author"));
+			foreach ($xml->collection->album->user as $user)
+			{
+				$a->users[$count2] = $user->getAttribute("login");
+				$count2++;
+			}
 			$this->albums[$count] = $a;
 			$count++;
 		}

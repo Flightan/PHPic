@@ -12,10 +12,12 @@ class Album {
  	private $theme;
  	private $display;
  	private $pictures;
+ 	private $users;
 
 	public function __construct($xml) 
 	{
 		$this->pictures = Array();
+		$this->users = Array();
 		readXML($xml);
 	}
 	
