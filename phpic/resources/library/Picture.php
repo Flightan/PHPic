@@ -36,6 +36,6 @@ class Picture {
 	
 	public function getSize()
 	{
-		
+		return getimagesize($path);
 	}
 }

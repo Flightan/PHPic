@@ -13,9 +13,9 @@ class Album {
  	private $display;
  	private $pictures;
 
-	public function __construct($author, $xml) 
+	public function __construct($xml) 
 	{
-		$this->author = $author;
+		$this->pictures = Array();
 		readXML($xml);
 	}
 	
