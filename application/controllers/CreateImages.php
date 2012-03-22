@@ -1,6 +1,6 @@
 <?php
 // Paths etant la liste des differents chemins
-$paths = '';
+$path = '../../public/joseph/album1/test.jpg';
 
 foreach ($paths as $path)
 {
@@ -9,19 +9,21 @@ foreach ($paths as $path)
 	$info = pathinfo($filename);
 	
 	// Je prend le nom du fichier sans l'extension qui ell est peut etre trouvee d'apres $info['extension']
-	$filename =  basename($file,'.'.$info['extension']);
+	$filename =  basename($filename,'.'.$info['extension']);
 	
 	// J'essaye d'avoir tout le chemin jusqu'au dernier repertoire c-a-d sans le nom du fichier
 	$dirname = dirname($path);
 	
 	// Je cree mon objet source qui contient l'image originale
 	if ($info['extension'] == 'jpg')
-		$source = imagecreatefromjpeg(path);
+		$source = imagecreatefromjpeg($path);
 	else if ($info['extension'] == 'png')
-		$source = imagecreatefrompng(path);
+		$source = imagecreatefrompng($path);
+	else
+		$source = imagecreatefromjpeg($path);
 		
 	// Je prend les dimensions de l'image	
-	list($width, $height) = getimagesize(path); 
+	list($width, $height) = getimagesize($path); 
 	
 	// VALEURS A MODIFIER - CECI EST UN EXEMPLE
 	if ($width > $height)
@@ -50,12 +52,12 @@ foreach ($paths as $path)
 	$dir_for_full = $dirname.'/full';
 	// On verifie l'existance du repertoire qui va contenir les images (full size) - On le cree s'il n'existe pas
 	if (!file_exists($dir_for_full))
-		mkdir($dir_for_full);
+		mkdir($dir_for_full, 0755);
 		
 	$dir_for_thumbs = $dirname.'/thumbs';
 	// On verifie l'existance du repertoire qui va contenir les images (thumbnails) - On le cree s'il n'existe pas
 	if (!file_exists($dir_for_thumbs))
-		mkdir($dir_for_thumbs);
+		mkdir($dir_for_thumbs, 0755);
 	
 	// Copie des images sur le disque
 	$path_full = $dir_for_full.'/'.$filename.'_full.'.$info['extension'];
