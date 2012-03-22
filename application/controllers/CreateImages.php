@@ -47,9 +47,19 @@ foreach ($paths as $path)
 	imagecopyresized($destination_full, $source, 0, 0, 0, 0, $width_full, $height_full, $width, $height);
 	imagecopyresized($destination_thumb, $source, 0, 0, 0, 0, $width_thumb, $height_thumb, $width, $height);
 	
+	$dir_for_full = $dirname.'/full';
+	// On verifie l'existance du repertoire qui va contenir les images (full size) - On le cree s'il n'existe pas
+	if (!file_exists($dir_for_full))
+		mkdir($dir_for_full);
+		
+	$dir_for_thumbs = $dirname.'/thumbs';
+	// On verifie l'existance du repertoire qui va contenir les images (thumbnails) - On le cree s'il n'existe pas
+	if (!file_exists($dir_for_thumbs))
+		mkdir($dir_for_thumbs);
+	
 	// Copie des images sur le disque
-	$path_full = $dirname.'/'.$filename.'_full.'.$info['extension'];
-	$path_thumb = $dirname.'/'.$filename.'_thumb.'.$info['extension'];
+	$path_full = $dir_for_full.'/'.$filename.'_full.'.$info['extension'];
+	$path_thumb = $dir_for_thumbs.'/'.$filename.'_thumb.'.$info['extension'];
 	imagejpeg($destination_full, $path_full, 100);
 	imagejpeg($destination_thumb, $path_thumb, 100);
 	
