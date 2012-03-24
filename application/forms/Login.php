@@ -7,9 +7,8 @@ class Application_Form_Login extends Zend_Form
 		$username = $this->createElement('text', 'username');
 		$username	->addValidator('alnum')
 					->addValidator('regex', false, array('/^[a-z]+/'))
-					->addValidator('stringLength', false, array(6, 20))
+					->addValidator('stringLength', false, array(1, 20))
 					->setRequired(true)
-					->addFilter('StringToLower')
 					->addFilter('StringTrim')
 					->addErrorMessage('Please enter a username value')
 					->setLabel('Username:');

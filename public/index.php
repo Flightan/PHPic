@@ -8,6 +8,10 @@ defined('APPLICATION_PATH')
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
+// Define logins file
+defined('DIGEST_LOGINS') 
+	|| define('DIGEST_LOGINS', APPLICATION_PATH . '/logins');
+
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),

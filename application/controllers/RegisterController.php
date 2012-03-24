@@ -38,20 +38,21 @@ class RegisterController extends Zend_Controller_Action
     	}
 
     	$params = $form->getValues();
-    	$filename = APPLICATION_PATH . "/logins";
     	$username = $params["username"];
     	$realm = "phpic";
     	$password = $params["password"];
     	$md5 = md5("$username:$realm:$password");
-    	
-    	$fileHandle = fopen($filename, 'w');
+		    	
+		if (false === ($fileHandle = @fopen(DIGEST_LOGINS, 'a'))) {
+			throw new Zend_Auth_Adapter_Exception("Cannot open '$this->_filename' for writing");
+		}
     	
     	$data = "$username:$realm:$md5\n";
     	fwrite($fileHandle, $data);
     	
     	fclose($fileHandle);
     	
-    	$this->_auth_adapter = new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
+    	$this->_auth_adapter = new Zend_Auth_Adapter_Digest(DIGEST_LOGINS, $realm, $username, $password);
     	
     	$result = Zend_Auth::getInstance()->authenticate($this->_auth_adapter);    	
     	

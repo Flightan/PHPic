@@ -23,11 +23,10 @@ class LoginController extends Zend_Controller_Action
 
 	public function getAuthAdapter(array $params)
 	{
-		$filename = APPLICATION_PATH . "/logins";
 		$username = $params["username"];
 		$password = $params["password"];
 		
-		return new Zend_Auth_Adapter_Digest($filename, "phpic", $username, $password);
+		return new Zend_Auth_Adapter_Digest(DIGEST_LOGINS, "phpic", $username, $password);
 	}
 
 	public function preDispatch()

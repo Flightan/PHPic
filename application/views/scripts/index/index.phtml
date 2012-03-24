@@ -2,7 +2,20 @@
 	<div class="page-header">
 		<h1>Home</h1>
 		<center>
-			<img src="/img/PHPic_preview.jpg" alt="derp"/>
+<?php
+
+if (false === ($fileHandle = @fopen(DIGEST_LOGINS, 'r'))) {
+	throw new Zend_Auth_Adapter_Exception("Cannot open '$this->_filename' for reading");
+}
+
+while ($line = trim(fgets($fileHandle))) {
+	$splitLine = explode(":", $line);
+	$id = $splitLine[0];
+	
+	echo "<a href='#'>$id</a>";
+}
+
+?>
 		</center>
 	</div>
 </div>
