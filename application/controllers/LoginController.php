@@ -23,12 +23,11 @@ class LoginController extends Zend_Controller_Action
 
 	public function getAuthAdapter(array $params)
 	{
-		$filename = "logins";
-		$real = "phpic";
+		$filename = APPLICATION_PATH . "/logins";
 		$username = $params["username"];
 		$password = $params["password"];
 		
-		return new Zend_Auth_Adapter_Digest($filename, $realm, $username, $password);
+		return new Zend_Auth_Adapter_Digest($filename, "phpic", $username, $password);
 	}
 
 	public function preDispatch()
@@ -84,7 +83,7 @@ class LoginController extends Zend_Controller_Action
 	public function logoutAction()
 	{
 		Zend_Auth::getInstance()->clearIdentity();
-		$this->_helper->redirector('index'); // back to login page
+		$this->_helper->redirector('index', 'index'); // back to login page
 	}
 }
 

@@ -14,13 +14,13 @@ Setting Up Your VHOST
 The following is a sample VHOST you might want to consider for your project.
 
 <VirtualHost *:80>
-   DocumentRoot "/home/florian/workspace/zendphpic/public"
-   ServerName zendphpic.local
+   DocumentRoot "/home/florian/workspace/phpic/public"
+   ServerName phpic.local
 
    # This should be omitted in the production environment
    SetEnv APPLICATION_ENV development
     
-   <Directory "/home/florian/workspace/zendphpic/public">
+   <Directory "/home/florian/workspace/phpic/public">
        Options Indexes MultiViews FollowSymLinks
        AllowOverride All
        Order allow,deny

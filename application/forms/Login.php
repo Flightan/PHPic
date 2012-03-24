@@ -3,32 +3,28 @@
 class Application_Form_Login extends Zend_Form
 {
 	public function init()
-	{
-		$username = $this->addElement('text', 'username', array(
-            'filters'    => array('StringTrim', 'StringToLower'),
-            'validators' => array(
-                'Alpha',
-		array('StringLength', false, array(3, 20)),
-		),
-            'required'   => true,
-            'label'      => 'Username:',
-		));
+	{		
+		$username = $this->createElement('text', 'username');
+		$username	->addValidator('alnum')
+					->addValidator('regex', false, array('/^[a-z]+/'))
+					->addValidator('stringLength', false, array(6, 20))
+					->setRequired(true)
+					->addFilter('StringToLower')
+					->addFilter('StringTrim')
+					->addErrorMessage('Please enter a username value')
+					->setLabel('Username:');
+		
+		$password = $this->createElement('password', 'password');
+		$password	->addValidator('StringLength', false, array(6))
+					->setRequired(true)
+					->addFilter('StringTrim')
+					->addErrorMessage('Please enter a password')
+					->setLabel('Password:');
+		
+		$this	->addElement($username)
+				->addElement($password)
+				->addElement('submit', 'login', array('label' => 'Login'));
 
-		$password = $this->addElement('password', 'password', array(
-            'filters'    => array('StringTrim'),
-            'validators' => array(
-                'Alnum',
-		array('StringLength', false, array(6, 20)),
-		),
-            'required'   => true,
-            'label'      => 'Password:',
-		));
-
-		$login = $this->addElement('submit', 'login', array(
-            'required' => false,
-            'ignore'   => true,
-            'label'    => 'Login',
-		));
 
 		// We want to display a 'failed authentication' message if necessary;
 		// we'll do that with the form 'description', so we need to add that
