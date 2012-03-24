@@ -6,19 +6,17 @@
 <?php echo $this->headLink()->appendStylesheet('/css/global.css') ?>
 </head>
 <body>
-	<div class="container">
-		<div class="header">
-			<a class="brand" href="/">PHPic</a>
-			<p>
+<div class="header">
+	<a class="brand" href="/">PHPic</a>
+	<p>
 <?php echo $this->profileLink() ?>
-			</p>
-		</div>
-		<hr>
+	</p>
+</div>
+<div class="container">
 <?php echo $this->layout()->content ?>
-		<hr>
-		<footer>
-			<p>&copy; PHPic 2012</p>
-		</footer>
-	</div>
+<footer>
+	<p>&copy; PHPic 2012</p>
+</footer>
+</div>
 </body>
 </html>

@@ -1,8 +1,13 @@
-<div id="home" class="content">
-	<div class="page-header">
-		<h1>Home</h1>
-		<center>
+<div class="page-header">
+	<h1>Home</h1>
+</div>
+<div class='userList'>
+	<ul class='polaroids'>
 <?php
+
+function drawUser($id) {	
+	return "<li><a href='$id' title='$id'><img src='/img/user.png' alt='$id' /></a></li>";
+}
 
 if (false === ($fileHandle = @fopen(DIGEST_LOGINS, 'r'))) {
 	throw new Zend_Auth_Adapter_Exception("Cannot open '$this->_filename' for reading");
@@ -12,10 +17,11 @@ while ($line = trim(fgets($fileHandle))) {
 	$splitLine = explode(":", $line);
 	$id = $splitLine[0];
 	
-	echo "<a href='#'>$id</a>";
+	print drawUser($id);
 }
 
 ?>
-		</center>
-	</div>
+	</ul>
+	<br class='clear'/>
+</div>
 </div>
