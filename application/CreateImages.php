@@ -28,12 +28,23 @@ foreach ($paths as $path)
 	$dirname = dirname($path);
 	
 	// Je cree mon objet source qui contient l'image originale
-	if ($info['extension'] == 'jpg' || $info['extension'] == 'JPG')
-		$source = imagecreatefromjpeg($path);
-	else if ($info['extension'] == 'png' || $info['extension'] == 'PNG')
-		$source = imagecreatefrompng($path);
-	else
-		$source = imagecreatefromjpeg($path);
+	switch ($info['extension'])
+	{
+		case 'jpg':
+		case 'JPG': 
+			$source = imagecreatefromjpeg($path); 
+			break;
+		case 'png':
+		case 'PNG': 
+			$source = imagecreatefrompng($path); 
+			break;
+		case 'gif': 
+		case 'GIF':
+			$source = imagecreatefromgif($path); 
+			break;
+		default: 
+			$source = imagecreatefromjpeg($path);
+	}
 		
 	// Je prend les dimensions de l'image	
 	list($width, $height) = getimagesize($path); 
@@ -75,8 +86,28 @@ foreach ($paths as $path)
 	// Copie des images sur le disque
 	$path_full = $dir_for_full.'/'.$filename;
 	$path_thumb = $dir_for_thumbs.'/'.$filename;
-	imagejpeg($destination_full, $path_full, 100);
-	imagejpeg($destination_thumb, $path_thumb, 100);
+
+	switch ($info['extension'])
+	{
+		case 'jpg':
+		case 'JPG': 
+			imagejpeg($destination_full, $path_full, 100);
+			imagejpeg($destination_thumb, $path_thumb, 100); 
+			break;
+		case 'png':
+		case 'PNG': 
+			imagepng($destination_full, $path_full, 100);
+			imagepng($destination_thumb, $path_thumb, 100);
+			break;
+		case 'gif': 
+		case 'GIF':
+			imagegif($destination_full, $path_full);
+			imagegif($destination_thumb, $path_thumb);
+			break;
+		default:
+			imagejpeg($destination_full, $path_full, 100);
+			imagejpeg($destination_thumb, $path_thumb, 100); 
+	}
 	
 	// Destruction des objets temporaires
 	imagedestroy($destination_full);
@@ -84,7 +115,7 @@ foreach ($paths as $path)
 	imagedestroy($source);
 }
 
-
+//NOT BEING USED
 function fastimagecopyresampled (&$dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h, $quality = 3) {
   // Plug-and-Play fastimagecopyresampled function replaces much slower imagecopyresampled.
   // Just include this function and change all "imagecopyresampled" references to "fastimagecopyresampled".
