@@ -6,7 +6,7 @@ class AlbumsController extends Zend_Controller_Action
 	
     public function init()
     {
-        /* Initialize action controller here */
+        $this->html = "TEST";
     }
     
 	protected function parseXML($xml)
@@ -24,6 +24,10 @@ class AlbumsController extends Zend_Controller_Action
 	    }
 	    
 	    return $albums;
+    }
+    
+    function drawAlbum($album) {
+    	return "<li><a href='/albums/index/user/$album' title='$album'><img src='/img/user.png' alt='$album' /></a></li>";
     }
 
     public function indexAction()
@@ -45,26 +49,14 @@ class AlbumsController extends Zend_Controller_Action
     	
         // action body
         //ICI faudra gerer leur affichage
-    	$html = new Zend_Form;
-    	$i = 0;
+    	$this->view->html = "<ul class='polaroids'>";
     	foreach ($this->albums as $album)
     	{
-    		$form->addElement('image', 'username'.$i++, array(
-    		'label'	=> $album,
-    		));
+    		$this->view->html .= $this->drawAlbum($album);
     	}
-    	$this->view->form = $form;
+    	$this->view->html .= "</ul><br class='clear'/>";
     }
 
-    public function loginAction()
-    {
-        // action body
-    }
-
-    public function logoutAction()
-    {
-        // action body
-    }
 
 
 }
