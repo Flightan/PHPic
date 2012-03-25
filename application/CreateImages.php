@@ -8,19 +8,19 @@ $paths[] = $rpath.'/caroline/spring_013/photo2.JPG';
 foreach ($paths as $path)
 {
 	// Je retrouve le nom du fichier avec l'extension
-	$filename = basename($path).PHP_EOL;
+	$filename = basename($path);
 	$info = pathinfo($filename);
 	
 	// Je prend le nom du fichier sans l'extension qui ell est peut etre trouvee d'apres $info['extension']
-	$filename =  basename($filename,'.'.$info['extension']);
+	//$filename =  basename($filename,'.'.$info['extension']);
 	
 	// J'essaye d'avoir tout le chemin jusqu'au dernier repertoire c-a-d sans le nom du fichier
 	$dirname = dirname($path);
 	
 	// Je cree mon objet source qui contient l'image originale
-	if ($info['extension'] == 'jpg')
+	if ($info['extension'] == 'jpg' || $info['extension'] == 'JPG')
 		$source = imagecreatefromjpeg($path);
-	else if ($info['extension'] == 'png')
+	else if ($info['extension'] == 'png' || $info['extension'] == 'PNG')
 		$source = imagecreatefrompng($path);
 	else
 		$source = imagecreatefromjpeg($path);
@@ -63,8 +63,8 @@ foreach ($paths as $path)
 		mkdir($dir_for_thumbs, 0755);
 	
 	// Copie des images sur le disque
-	$path_full = $dir_for_full.'/'.$filename.'.'.$info['extension'];
-	$path_thumb = $dir_for_thumbs.'/'.$filename.'.'.$info['extension'];
+	$path_full = $dir_for_full.'/'.$filename;
+	$path_thumb = $dir_for_thumbs.'/'.$filename;
 	imagejpeg($destination_full, $path_full, 100);
 	imagejpeg($destination_thumb, $path_thumb, 100);
 	
@@ -72,7 +72,5 @@ foreach ($paths as $path)
 	imagedestroy($destination_full);
 	imagedestroy($destination_thumb);
 	imagedestroy($source);
-	
-	// ICI FAUDRA STOCKER $path_full et $path_thumb DANS LE FICHIER XML
 }
 ?>

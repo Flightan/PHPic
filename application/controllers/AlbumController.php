@@ -29,6 +29,9 @@ class AlbumController extends Zend_Controller_Action
 			{
 				if ($file != "." && $file != "..")
 				{
+					$type = mime_content_type($file);
+					$first_token  = strtok('/something', '/');
+					$second_token = strtok('/');
 					if (mime_content_type($file))
 					{
 						$images[] = $file;
