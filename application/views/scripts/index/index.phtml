@@ -41,10 +41,24 @@ EOT;
 }
 
 function drawIndex() {
-	if (false === ($fileHandle = @fopen(DIGEST_LOGINS, 'r'))) {
-		throw new Zend_Auth_Adapter_Exception("Cannot open '$this->_filename' for reading");
-	}
 	
+	$path = realpath(APPLICATION_PATH . '/../public/users');
+
+	if ($dir = opendir($path))
+	{
+		$userList = array();
+		while (false !== ($user_rep = readdir($dir)))
+		{
+			if ($user_rep != "." && $user_rep != "..")
+			{
+				if (is_dir("users/" . $user_rep))
+				{
+					$userList[] = $user_rep;
+				}
+			}
+		}
+	}
+
 	$html = <<<EOT
 <div class='page-header'>
 	<h2><a href='.' title='index'>index</a></h2>
@@ -53,11 +67,9 @@ function drawIndex() {
 	<ul class='polaroids'>
 EOT;
 	
-	while ($line = trim(fgets($fileHandle))) {
-		$splitLine = explode(":", $line);
-		$id = $splitLine[0];
-	
-		$html .= drawUser($id);
+	foreach($userList as $user)
+	{
+		$html .= drawUser($user);
 	}
 	
 	$html .= <<<EOT

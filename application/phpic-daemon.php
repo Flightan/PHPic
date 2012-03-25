@@ -1,32 +1,40 @@
 <?php
 
+function getUserList($directory) {
+	$userList = array();
+	while (false !== ($user_rep = readdir($directory)))
+	{
+		if ($user_rep != "." && $user_rep != "..")
+		{
+			if (is_dir("users/" . $user_rep))
+			{
+				$userList[] = $user_rep;
+			}
+		}
+	}
+	return $userList;
+}
+
 /*while (true)
 {*/
 	//Parcour des dossier pour ajout des photo/album sur le site, suite a une upload.
 	//parcour de dossier utilisateur
-	//traitement xml user, retour liste album, vérification album a ajouté
+	//traitement xml user, retour liste album, vï¿½rification album a ajoutï¿½
 	//parcour dosier album
-	//traitement xml album, retour liste de photo, vérification photo a ajouté	$xml = simplexml_load_file("album.xml");
+	//traitement xml album, retour liste de photo, vï¿½rification photo a ajoutï¿½	$xml = simplexml_load_file("album.xml");
 	
-	if ($dir = opendir("users/"))
+	$path = realpath(APPLICATION_PATH . '/../public/users');
+	
+	if ($dir = opendir($path))
 	{
-		$users = array();
-		while (false !== ($user_rep = readdir($dir)))
+		$userList = getUserList($dir);
+
+		foreach($userList as $user)
 		{
-			if ($user_rep != "." && $user_rep != "..")
-			{
-				if (is_dir("users/" . $user_rep))
-				{
-					$users[] = $user_rep;
-				}
-			}
-		}
-		foreach($users as $us)
-		{
-			$user_path = "users/" . $us;
+			$user_path = $path . "/" . $user;
 			if ($dir_user = opendir($user_path))
 			{
-				echo "USER: " . $us . "<br>";
+				echo "USER: " . $user . "<br>";
 				$xml_album_path = $user_path . "/album.xml";			
 				$xml_album = simplexml_load_file($xml_album_path);
 				$exists_albums = array();
