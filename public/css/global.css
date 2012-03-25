@@ -170,3 +170,43 @@ ul.polaroids li a:hover {
 	position: relative;
 	z-index: 5;
 }
+
+/* Polaroids pour albums */
+
+ul.polaroids_albums {
+	margin: 0 0 18px -30px;
+}
+
+ul.polaroids_albums li {
+	display: inline;
+}
+
+ul.polaroids_albums a {
+	background: #fff;
+	display: inline;
+	float: left;
+	margin: 0 0 27px 30px;
+	width: auto;
+	padding: 5px 5px 5px;
+	text-align: center;
+	
+	text-decoration: none;
+	color: #333;
+	font-size: 18px;
+	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .25);
+	-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, .25);
+}
+
+ul.polaroids_albums img {
+	display: block;
+	width: 165px;
+}
+
+ul.polaroids_albums li a:hover {
+	-webkit-transform: scale(1.25);
+	-moz-transform: scale(1.25);
+	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .5);
+	-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, .5);
+	position: relative;
+	z-index: 5;
+}

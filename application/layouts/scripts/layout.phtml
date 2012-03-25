@@ -5,7 +5,9 @@
 	<title>PHPic</title>
 <?php 
 echo $this->headLink()->appendStylesheet('/css/global.css');
+echo $this->headLink()->appendStylesheet('/css/jquery.fancybox.css');
 echo $this->headScript()->appendFile('/js/jquery.min.js', $type = 'text/javascript', $attrs = array());
+echo $this->headScript()->appendFile('/js/jquery.fancybox.pack.js', $type = 'text/javascript', $attrs = array());
 ?>
 
 </head>

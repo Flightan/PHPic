@@ -44,7 +44,7 @@ class AlbumController extends Zend_Controller_Action
     }
     
 	function drawImage($image) {
-    	return "<li><a href='/users/".$this->view->user."/".$this->view->album."/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>";
+    	return "<li><a class='fancybox' rel='group' href='/users/".$this->view->user."/".$this->view->album."/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>";
     }
 
     public function indexAction()
@@ -68,7 +68,7 @@ class AlbumController extends Zend_Controller_Action
     	
         // action body
         //ICI faudra gerer leur affichage
-    	$this->view->html = "<ul class='polaroids'>";
+    	$this->view->html = "<ul class='polaroids_albums'>";
     	foreach ($this->images as $image)
     	{
     		$this->view->html .= $this->drawImage($image);
