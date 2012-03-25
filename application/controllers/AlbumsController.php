@@ -7,14 +7,6 @@ class AlbumsController extends Zend_Controller_Action
     public function init()
     {
         /* Initialize action controller here */
-    	
-    	//ICI faut lire le parametre pour savoir quel utilisateur on veut
-    	//$this->_request->getParams();
-    	
-    	//On ouvre le fichier XML correspondant et on le parse pour avoir la liste des albums
-    	//exemple
-    	$xml = simplexml_load_file('joseph/albums.xml');
-    	$this->parseXML($xml);
     }
     
 	protected function parseXML($xml)
@@ -31,6 +23,20 @@ class AlbumsController extends Zend_Controller_Action
 
     public function indexAction()
     {
+    	//ICI faut lire le parametre pour savoir quel utilisateur on veut
+    	$user = $this->getRequest()->getParam('user');
+		//L'url doit etre de la forme: http://phpic.localhost.local/albums/index/user/joseph
+    	
+		//A enlever plus tard et gerer le cas ou pas de parametre dans l'url
+		if($user == '')
+			$user = 'joseph';
+			
+		$this->view->user = $user;
+    	//On ouvre le fichier XML correspondant et on le parse pour avoir la liste des albums
+    	//exemple
+    	$xml = simplexml_load_file($user.'/albums.xml');
+    	$this->parseXML($xml);
+    	
         // action body
         //ICI faudra gerer leur affichage
     	$form = new Zend_Form;
@@ -41,7 +47,7 @@ class AlbumsController extends Zend_Controller_Action
     		'label'	=> $album,
     		));
     	}
-    	$this->view->form = $form;	
+    	$this->view->form = $form;
     }
 
     public function loginAction()
