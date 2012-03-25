@@ -4,8 +4,8 @@ $paths = array();
 $rpath = realpath(APPLICATION_PATH . '/../public/users');
 $paths[] = $rpath.'/caroline/spring_013/photo1.JPG';
 $paths[] = $rpath.'/caroline/spring_013/photo2.JPG';
-$paths[] = $rpath.'/caroline/summer_013/photo1.JPG';
-$paths[] = $rpath.'/caroline/summer_013/photo2.JPG';
+$paths[] = $rpath.'/caroline/summer_013/photo3.JPG';
+$paths[] = $rpath.'/caroline/summer_013/photo4.JPG';
 
 foreach ($paths as $path)
 {
