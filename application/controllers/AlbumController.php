@@ -27,7 +27,7 @@ class AlbumController extends Zend_Controller_Action
     }
     
 	function drawImage($image) {
-    	return "<li><a href='/users/".$this->view->user."/".$this->view->album."/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/".$image."' alt='$image' /></a></li>";
+    	return "<li><a href='/users/".$this->view->user."/".$this->view->album."/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>";
     }
 
     public function indexAction()
