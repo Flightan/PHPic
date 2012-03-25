@@ -6,7 +6,7 @@
 <?php
 
 function drawUser($id) {	
-	return "<li><a href='$id' title='$id'><img src='/img/user.png' alt='$id' /></a></li>";
+	return "<li><a href='/albums/index/user/$id' title='$id'><img src='/img/user.png' alt='$id' /></a></li>";
 }
 
 if (false === ($fileHandle = @fopen(DIGEST_LOGINS, 'r'))) {
