@@ -6,6 +6,14 @@ $paths[] = $rpath.'/caroline/spring_013/photo1.JPG';
 $paths[] = $rpath.'/caroline/spring_013/photo2.JPG';
 $paths[] = $rpath.'/caroline/summer_013/photo3.JPG';
 $paths[] = $rpath.'/caroline/summer_013/photo4.JPG';
+$paths[] = $rpath.'/caroline/winter_013/photo1.JPG';
+$paths[] = $rpath.'/caroline/winter_013/photo2.JPG';
+$paths[] = $rpath.'/gwenael/spring_014/photo1.JPG';
+$paths[] = $rpath.'/gwenael/spring_014/photo2.JPG';
+$paths[] = $rpath.'/gwenael/summer_014/photo1.JPG';
+$paths[] = $rpath.'/gwenael/summer_014/photo2.JPG';
+$paths[] = $rpath.'/gwenael/winter_014/photo1.JPG';
+$paths[] = $rpath.'/gwenael/winter_014/photo2.JPG';
 
 foreach ($paths as $path)
 {
@@ -51,8 +59,8 @@ foreach ($paths as $path)
 	$destination_thumb = imagecreatetruecolor($width_thumb, $height_thumb);
 	
 	// Redimensionnement
-	imagecopyresampled($destination_full, $source, 0, 0, 0, 0, $width_full, $height_full, $width, $height);
-	imagecopyresampled($destination_thumb, $source, 0, 0, 0, 0, $width_thumb, $height_thumb, $width, $height);
+	imagecopyresized($destination_full, $source, 0, 0, 0, 0, $width_full, $height_full, $width, $height);
+	imagecopyresized($destination_thumb, $source, 0, 0, 0, 0, $width_thumb, $height_thumb, $width, $height);
 	
 	$dir_for_full = $dirname.'/full';
 	// On verifie l'existance du repertoire qui va contenir les images (full size) - On le cree s'il n'existe pas
@@ -75,4 +83,30 @@ foreach ($paths as $path)
 	imagedestroy($destination_thumb);
 	imagedestroy($source);
 }
+
+
+function fastimagecopyresampled (&$dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h, $quality = 3) {
+  // Plug-and-Play fastimagecopyresampled function replaces much slower imagecopyresampled.
+  // Just include this function and change all "imagecopyresampled" references to "fastimagecopyresampled".
+  // Typically from 30 to 60 times faster when reducing high resolution images down to thumbnail size using the default quality setting.
+  // Author: Tim Eckel - Date: 09/07/07 - Version: 1.1 - Project: FreeRingers.net - Freely distributable - These comments must remain.
+  //
+  // Optional "quality" parameter (defaults is 3). Fractional values are allowed, for example 1.5. Must be greater than zero.
+  // Between 0 and 1 = Fast, but mosaic results, closer to 0 increases the mosaic effect.
+  // 1 = Up to 350 times faster. Poor results, looks very similar to imagecopyresized.
+  // 2 = Up to 95 times faster.  Images appear a little sharp, some prefer this over a quality of 3.
+  // 3 = Up to 60 times faster.  Will give high quality smooth results very close to imagecopyresampled, just faster.
+  // 4 = Up to 25 times faster.  Almost identical to imagecopyresampled for most images.
+  // 5 = No speedup. Just uses imagecopyresampled, no advantage over imagecopyresampled.
+
+  if (empty($src_image) || empty($dst_image) || $quality <= 0) { return false; }
+  if ($quality < 5 && (($dst_w * $quality) < $src_w || ($dst_h * $quality) < $src_h)) {
+    $temp = imagecreatetruecolor ($dst_w * $quality + 1, $dst_h * $quality + 1);
+    imagecopyresized ($temp, $src_image, 0, 0, $src_x, $src_y, $dst_w * $quality + 1, $dst_h * $quality + 1, $src_w, $src_h);
+    imagecopyresampled ($dst_image, $temp, $dst_x, $dst_y, 0, 0, $dst_w, $dst_h, $dst_w * $quality, $dst_h * $quality);
+    imagedestroy ($temp);
+  } else imagecopyresampled ($dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+  return true;
+}
+
 ?>

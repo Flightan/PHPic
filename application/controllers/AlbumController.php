@@ -44,7 +44,7 @@ class AlbumController extends Zend_Controller_Action
     }
     
 	function drawImage($image) {
-    	return "<li><a class='fancybox' rel='group' href='/users/".$this->view->user."/".$this->view->album."/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>";
+    	return "<li><a class='fancybox' rel='group' href='/users/".$this->view->user."/".$this->view->album."/full/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>";
     }
 
     public function indexAction()
