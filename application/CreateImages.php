@@ -54,14 +54,14 @@ foreach ($paths as $path)
 	if (!file_exists($dir_for_full))
 		mkdir($dir_for_full, 0755);
 		
-	$dir_for_thumbs = $dirname.'/thumbs';
+	$dir_for_thumbs = $dirname.'/thumbnails';
 	// On verifie l'existance du repertoire qui va contenir les images (thumbnails) - On le cree s'il n'existe pas
 	if (!file_exists($dir_for_thumbs))
 		mkdir($dir_for_thumbs, 0755);
 	
 	// Copie des images sur le disque
-	$path_full = $dir_for_full.'/'.$filename.'_full.'.$info['extension'];
-	$path_thumb = $dir_for_thumbs.'/'.$filename.'_thumb.'.$info['extension'];
+	$path_full = $dir_for_full.'/'.$filename.$info['extension'];
+	$path_thumb = $dir_for_thumbs.'/'.$filename.$info['extension'];
 	imagejpeg($destination_full, $path_full, 100);
 	imagejpeg($destination_thumb, $path_thumb, 100);
 	
