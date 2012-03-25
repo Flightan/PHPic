@@ -1,6 +1,8 @@
 <div id="albums" class="content">
-	<div class="page-header">
-		<p><a href="/">Home</a> | <?php echo $this->user ?></p>
+	<div class='page-header'>
+		<h2><a href='/' title='index'>index</a> / <a href='/albums/index/user/<?php echo $this->user ?>' title='<?php echo $this->user ?>'><?php echo $this->user ?></a></h2>
+	</div>
+	<div class='content'>
 		<h1>Albums</h1>
 		<center>
 			<?php echo $this->form ?>
