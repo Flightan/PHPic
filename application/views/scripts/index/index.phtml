@@ -1,27 +1,79 @@
-<div class="page-header">
-	<h1>Home</h1>
-</div>
-<div class='userList'>
-	<ul class='polaroids'>
 <?php
 
-function drawUser($id) {	
-	return "<li><a href='$id' title='$id'><img src='/img/user.png' alt='$id' /></a></li>";
+function drawUser($id) {
+	return "<li><a href='#' title='$id'><img src='/img/user.png' alt='$id' /></a></li>";
 }
 
-if (false === ($fileHandle = @fopen(DIGEST_LOGINS, 'r'))) {
-	throw new Zend_Auth_Adapter_Exception("Cannot open '$this->_filename' for reading");
-}
+function drawAlbum($id) {
+	if (false === ($fileHandle = @fopen(DIGEST_LOGINS, 'r'))) {
+		throw new Zend_Auth_Adapter_Exception("Cannot open '$this->_filename' for reading");
+	}
 
-while ($line = trim(fgets($fileHandle))) {
-	$splitLine = explode(":", $line);
-	$id = $splitLine[0];
-	
-	print drawUser($id);
-}
+	$html = <<<EOT
+<div class='page-header'>
+	<h2><a href='.' title='index'>index</a> / <a href='.' title='index'>$id</a></h2>
+</div>
+<div class='content'>
+	<ul class='polaroids'>
+EOT;
 
-?>
+	while ($line = trim(fgets($fileHandle))) {
+		$splitLine = explode(":", $line);
+		$id = $splitLine[0];
+
+		$html .= drawUser($id);
+	}
+
+	$html .= <<<EOT
 	</ul>
 	<br class='clear'/>
 </div>
 </div>
+
+<script>
+$("img").click(function () {
+  $(".content").replaceWith( "<p>TEST</p>" );
+});
+</script>
+EOT;
+
+	return $html;
+}
+
+function drawIndex() {
+	if (false === ($fileHandle = @fopen(DIGEST_LOGINS, 'r'))) {
+		throw new Zend_Auth_Adapter_Exception("Cannot open '$this->_filename' for reading");
+	}
+	
+	$html = <<<EOT
+<div class='page-header'>
+	<h2><a href='.' title='index'>index</a></h2>
+</div>
+<div class='content'>
+	<ul class='polaroids'>
+EOT;
+	
+	while ($line = trim(fgets($fileHandle))) {
+		$splitLine = explode(":", $line);
+		$id = $splitLine[0];
+	
+		$html .= drawUser($id);
+	}
+	
+	$html .= <<<EOT
+	</ul>
+	<br class='clear'/>
+</div>
+</div>
+
+<script>
+$("img").click(function () {
+  $(".container").replaceWith( <?php drawAlbum('florian') ?> );
+});
+</script>
+EOT;
+
+	return $html;
+}
+
+echo drawIndex();

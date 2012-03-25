@@ -3,14 +3,17 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>PHPic</title>
-<?php echo $this->headLink()->appendStylesheet('/css/global.css') ?>
+<?php 
+echo $this->headLink()->appendStylesheet('/css/global.css');
+echo $this->headScript()->appendFile('/js/jquery.min.js', $type = 'text/javascript', $attrs = array());
+?>
+
 </head>
 <body>
 <div class="header">
 	<a class="brand" href="/">PHPic</a>
-	<p>
 <?php echo $this->profileLink() ?>
-	</p>
+<br class='clear'/>
 </div>
 <div class="container">
 <?php echo $this->layout()->content ?>

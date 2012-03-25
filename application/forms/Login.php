@@ -24,6 +24,7 @@ class Application_Form_Login extends Zend_Form
 				->addElement($password)
 				->addElement('submit', 'login', array('label' => 'Login'));
 
+		// TODO : Add "I forgot my password" + send email
 
 		// We want to display a 'failed authentication' message if necessary;
 		// we'll do that with the form 'description', so we need to add that

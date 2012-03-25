@@ -47,7 +47,7 @@ footer {
 	margin-left: auto;
 	margin-right: auto;
 	*zoom: 1;
-	border-top: thick solid #333333;
+	border-top: solid #333333;
 }
 
 .header .brand:hover {
@@ -63,6 +63,7 @@ footer {
 	line-height: 1;
 	color: #333333;
 	text-decoration: none;
+	float: left;
 }
 
 a {
@@ -74,8 +75,16 @@ a:hover {
 	text-decoration: none;
 }
 
-.userList {
+h2 a {
+	text-decoration: none;
+}
+
+.content {
 	display: block;
+}
+
+p.profileLink {
+	float: right;
 }
 
 ul.polaroids {
@@ -94,7 +103,7 @@ ul.polaroids a {
 	width: auto;
 	padding: 10px 10px 15px;
 	text-align: center;
-	font-family: "Marker Felt", sans-serif;
+	
 	text-decoration: none;
 	color: #333;
 	font-size: 18px;
@@ -107,7 +116,7 @@ ul.polaroids a {
 
 ul.polaroids img {
 	display: block;
-	width: 190px;
+	width: 165px;
 	margin-bottom: 12px;
 }
 
@@ -128,10 +137,10 @@ ul.polaroids li:nth-child(3n) a {
 }
 
 ul.polaroids li:nth-child(5n) a {
-	-webkit-transform: rotate(5deg);
+	-webkit-transform: rotate(4deg);
 	position: relative;
 	right: 5px;
-	-moz-transform: rotate(5deg);
+	-moz-transform: rotate(4deg);
 }
 
 ul.polaroids li:nth-child(8n) a {
@@ -149,8 +158,8 @@ ul.polaroids li:nth-child(11n) a {
 ul.polaroids li.messy a {
 	margin-top: -375px;
 	margin-left: 160px;
-	-webkit-transform: rotate(-5deg);
-	-moz-transform: rotate(-5deg);
+	-webkit-transform: rotate(-4deg);
+	-moz-transform: rotate(-4deg);
 }
 
 ul.polaroids li a:hover {
