@@ -1,15 +1,8 @@
 <div id="album" class="content">
-	<div class="page-header">
-		<h1>Album</h1>
-		<center>
-			<img src="/img/" alt="derp"/>
-			<img src="/img/" alt="derp"/>
-			<img src="/img/" alt="derp"/>
-			<img src="/img/" alt="derp"/>
-			<img src="/img/" alt="derp"/>
-			<img src="/img/" alt="derp"/>
-			<img src="/img/" alt="derp"/>
-			<img src="/img/" alt="derp"/>
-		</center>
+	<div class='page-header'>
+		<h2><a href='/' title='index'>index</a> / <a href='/albums/index/user/<?php echo $this->user ?>' title='<?php echo $this->user ?>'><?php echo $this->user ?></a> / <a href='/album/index/user/<?php echo $this->user ?>/title/<?php echo $this->album ?>' title='<?php echo $this->album ?>'><?php echo $this->album ?></a></h2>
+	</div>
+	<div class='content'>
+		<?php echo $this->html ?>
 	</div>
 </div>
