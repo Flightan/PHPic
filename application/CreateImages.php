@@ -63,8 +63,8 @@ foreach ($paths as $path)
 		mkdir($dir_for_thumbs, 0755);
 	
 	// Copie des images sur le disque
-	$path_full = $dir_for_full.'/'.$filename.$info['extension'];
-	$path_thumb = $dir_for_thumbs.'/'.$filename.$info['extension'];
+	$path_full = $dir_for_full.'/'.$filename.'.'.$info['extension'];
+	$path_thumb = $dir_for_thumbs.'/'.$filename.'.'.$info['extension'];
 	imagejpeg($destination_full, $path_full, 100);
 	imagejpeg($destination_thumb, $path_thumb, 100);
 	
