@@ -22,6 +22,20 @@ class AlbumController extends Zend_Controller_Action
 	    		}
 	    	}
 	    }
+	    /*if ($dir = opendir($path))
+		{
+			$images = array();
+			while (false !== ($file = readdir($dir)))
+			{
+				if ($file != "." && $file != "..")
+				{
+					if (mime_content_type($file))
+					{
+						$images[] = $file;
+					}
+				}
+			}
+		}*/
 	    
 	    return $images;
     }
