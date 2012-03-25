@@ -11,14 +11,19 @@ class AlbumsController extends Zend_Controller_Action
     
 	protected function parseXML($xml)
     {
-    	$this->albums = Array();
-    	$i = 0;
-	    foreach ($xml->collection->album as $value)
-		{
-			//Faut les mettre dans un tableau
-    		$this->albums[$i] = $value->attributes()->title;
-    		$i++;
+    	$albums = Array();
+	    if ($xml != false)
+	    {
+	    	foreach($xml->children() as $k=>$item)
+	    	{
+	    		if($k == "album")
+	    		{
+	    			$albums[] = $item['title'][0];
+	    		}
+	    	}
 	    }
+	    
+	    return $albums;
     }
 
     public function indexAction()
@@ -30,16 +35,17 @@ class AlbumsController extends Zend_Controller_Action
 		//A enlever plus tard et gerer le cas ou pas de parametre dans l'url
 		if($user == '')
 			$user = 'joseph';
-			
+		
 		$this->view->user = $user;
     	//On ouvre le fichier XML correspondant et on le parse pour avoir la liste des albums
     	//exemple
-    	$xml = simplexml_load_file($user.'/albums.xml');
-    	$this->parseXML($xml);
+		$path = realpath(APPLICATION_PATH . '/../public/users');
+    	$xml = simplexml_load_file($path . "/" . $user.'/album.xml');
+    	$this->albums = $this->parseXML($xml);
     	
         // action body
         //ICI faudra gerer leur affichage
-    	$form = new Zend_Form;
+    	$html = new Zend_Form;
     	$i = 0;
     	foreach ($this->albums as $album)
     	{
