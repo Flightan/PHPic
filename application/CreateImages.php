@@ -1,6 +1,9 @@
 <?php
 // Paths etant la liste des differents chemins
-$path = '../../public/joseph/album1/test.jpg';
+$paths = array();
+$rpath = realpath(APPLICATION_PATH . '/../public/users');
+$paths[] = $rpath.'/caroline/spring_013/photo1.JPG';
+$paths[] = $rpath.'/caroline/spring_013/photo2.JPG';
 
 foreach ($paths as $path)
 {
@@ -30,15 +33,15 @@ foreach ($paths as $path)
 	{
 		$width_full = 800;
 		$height_full = 600;
-		$width_thumb = 60;
-		$height_thumb = 40;
+		$width_thumb = 80;
+		$height_thumb = 60;
 	}
 	else
 	{
 		$width_full = 600;
 		$height_full = 800;
-		$width_thumb = 40;
-		$height_thumb = 60;
+		$width_thumb = 60;
+		$height_thumb = 80;
 	}
 
 	// Creation des images de destination
