@@ -1,0 +1,9 @@
+#!/bin/sh
+
+#write out current crontab
+crontab -l > mycron
+#echo new cron into cron file
+echo "* * * * * /usr/local/bin/php -q ./CreateImages.php" >> mycron
+#install new cron file
+crontab mycron
+rm mycron

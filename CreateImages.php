@@ -1,7 +1,8 @@
 <?php
 // Paths etant la liste des differents chemins
 $paths = array();
-$rpath = realpath(APPLICATION_PATH . '/../public/users');
+//$rpath = realpath(APPLICATION_PATH . '/../public/users');
+$rpath = './public/users';
 $paths[] = $rpath.'/caroline/spring_013/photo1.JPG';
 $paths[] = $rpath.'/caroline/spring_013/photo2.JPG';
 $paths[] = $rpath.'/caroline/summer_013/photo3.JPG';
@@ -14,6 +15,12 @@ $paths[] = $rpath.'/gwenael/summer_014/photo1.JPG';
 $paths[] = $rpath.'/gwenael/summer_014/photo2.JPG';
 $paths[] = $rpath.'/gwenael/winter_014/photo1.JPG';
 $paths[] = $rpath.'/gwenael/winter_014/photo2.JPG';
+$paths[] = $rpath.'/jean-charle/spring_015/photo1.JPG';
+$paths[] = $rpath.'/jean-charle/spring_015/photo2.JPG';
+$paths[] = $rpath.'/jean-charle/summer_015/photo1.JPG';
+$paths[] = $rpath.'/jean-charle/summer_015/photo2.JPG';
+$paths[] = $rpath.'/jean-charle/winter_015/photo1.JPG';
+$paths[] = $rpath.'/jean-charle/winter_015/photo2.JPG';
 
 foreach ($paths as $path)
 {
