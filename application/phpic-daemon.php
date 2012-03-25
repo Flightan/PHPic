@@ -1,45 +1,35 @@
 <?php
 
-function getUserList($directory) {
-	$userList = array();
-	while (false !== ($user_rep = readdir($directory)))
+while (true)
+{
+	//Recherche des utilisateurs
+	$doc_user = realpath(APPLICATION_PATH . '/../public/users');
+	
+	if ($dir = opendir($doc_user))
 	{
-		if ($user_rep != "." && $user_rep != "..")
+		$users = array();
+		while (false !== ($user_rep = readdir($dir)))
 		{
-			if (is_dir("users/" . $user_rep))
+			if ($user_rep != "." && $user_rep != "..")
 			{
-				$userList[] = $user_rep;
+				if (is_dir($doc_user . $user_rep))
+				{
+					$users[] = $user_rep;
+				}
 			}
 		}
-	}
-	return $userList;
-}
-
-/*while (true)
-{*/
-	//Parcour des dossier pour ajout des photo/album sur le site, suite a une upload.
-	//parcour de dossier utilisateur
-	//traitement xml user, retour liste album, v�rification album a ajout�
-	//parcour dosier album
-	//traitement xml album, retour liste de photo, v�rification photo a ajout�	$xml = simplexml_load_file("album.xml");
-	
-	$path = realpath(APPLICATION_PATH . '/../public/users');
-	
-	if ($dir = opendir($path))
-	{
-		$userList = getUserList($dir);
-
-		foreach($userList as $user)
+		// Parcour des dossier utilisateur
+		foreach($users as $us)
 		{
-			$user_path = $path . "/" . $user;
+			$user_path = $doc_user . $us;
 			if ($dir_user = opendir($user_path))
 			{
-				echo "USER: " . $user . "<br>";
-				$xml_album_path = $user_path . "/album.xml";			
-				$xml_album = simplexml_load_file($xml_album_path);
+				$xml_album_path = $user_path . "/album.xml";
 				$exists_albums = array();
-				if ($xml_album != false)
+				//Test si le xml album exist, parcour du xml
+				if (file_exists($xml_album_path))
 				{
+					$xml_album = simplexml_load_file($xml_album_path);
 					foreach($xml_album->children() as $k=>$item)
 					{
 						if($k == "album")
@@ -47,25 +37,48 @@ function getUserList($directory) {
 							$exists_albums[] = $item['title'][0];
 						}
 					}
-					echo "ALREADY ALBUMS: " . print_r($exists_albums) . "<br>";
-					//$albums = array();
+					$suppr_album_path = array();
+					//Parcour des dossier
 					while (false !== ($album_rep = readdir($dir_user)))
 					{
 						if ($album_rep != "." && $album_rep != "..")
 						{
 							if (is_dir($user_path . "/" . $album_rep))
 							{
+								$suppr_album_path[] = $album_rep;
 								if (in_array($album_rep, $exists_albums)) {
-									echo "album: " . $album_rep . " already exist<br>";
+									//L'album exist déjà
 									continue;
 								}
 								else {
-									//add album
-									echo "add album: " . $album_rep . "<br>";
+									//add album dans le xml
+									$new_album = $xml_album->addChild('album');
+									$new_album->addAttribute('title', $album_rep);
+									$new_album->addAttribute('scope', 'private');
+									$xml_album->saveXML($xml_album_path);
 								}
 							}
 						}
 					}
+					//Comparaison des dossiers et du xml pour la suppression d'album
+					foreach ($exists_albums as $suppr_alb)
+					{
+						if (!in_array($suppr_alb, $suppr_album_path))
+						{
+							foreach($xml_album->children() as $k=>$item)
+							{
+								if(($k == "album") && ($item['title'][0] == $suppr_alb))
+								{
+									$node = $xml_album->xpath("/collection/album[@title='" . $suppr_alb ."']");
+									$suppNode = dom_import_simplexml($node[0]);
+									$suppNode->parentNode->removeChild($suppNode);
+									$xml_album->saveXML($xml_album_path);
+									unset($exists_albums[array_search($suppr_alb, $exists_albums)]);
+								}
+							}
+						}
+					}
+					//Parcour de chaque album
 					foreach($exists_albums as $al)
 					{
 						$album_path = $user_path . "/" . $al;
@@ -73,59 +86,187 @@ function getUserList($directory) {
 						{
 							$xml_photo_path = $album_path . "/photo.xml";
 							$xml_photo_path = utf8_encode($xml_photo_path);
-							$xml_photo = simplexml_load_file($xml_photo_path);
-							$exists_photo = array();
-							foreach($xml_photo->children() as $k=>$item)
+							//Test l'existance du photo.xml de l'album
+							if (file_exists($xml_photo_path))
 							{
-								if($k == "picture")
+								$xml_photo = simplexml_load_file($xml_photo_path);
+								$exists_photo = array();
+								//Parcours du xml pour recuperer les photo éxistante
+								foreach($xml_photo->children() as $k=>$item)
 								{
-									$exists_photo[] = $item['url'][0];
-								}
-							}
-							while (false !== ($photo_rep = readdir($dir_album)))
-							{
-								if ($photo_rep != "." && $photo_rep != "..")
-								{
-									if (is_dir($dir_album . "/" . $photo_rep))
+									if($k == "picture")
 									{
-										continue;
-									} else {
-										if ($photo_rep != "photo.xml") {
-											if (in_array($photo_rep, $exists_photo))
-											{
-												echo "photo: " . $photo_rep . " already exist<br>";
-												continue;
-											} else {
-												//add photo
-												echo "add photo: " . $photo_rep . " in " . $al . "<br>";
+										$exists_photo[] = $item['url'][0];
+									}
+								}
+								//Array des chemins pour la création des miniatures
+								$thumbnail_paths = array();
+								$suppr_photo_path = array();
+								//Recuperation des chemin des photos
+								while (false !== ($photo_rep = readdir($dir_album)))
+								{
+									if ($photo_rep != "." && $photo_rep != "..")
+									{
+										if (is_dir($album_path . "/" . $photo_rep))
+										{
+											continue;
+										} else {
+											if ($photo_rep != "photo.xml") {
+												$suppr_photo_path[] = $photo_rep;
+												if (in_array($photo_rep, $exists_photo))
+												{
+													//La photo éxiste déjà
+													continue;
+												} else {
+													//add photo dans la liste des chemins pour les miniature
+													$new_photo = $xml_photo->addChild('picture');
+													$new_photo->addAttribute('url', $photo_rep);
+													$new_photo->addAttribute('thumbnail', ".thumbnails/" . $photo_rep);
+													$xml_photo->saveXML($xml_photo_path);
+													$thumbnail_paths[] = $album_path . "/" . $photo_rep;
+												}
 											}
 										}
 									}
 								}
+								//Comparaison des fichier et du photo.xml pour la suppression
+								foreach ($exists_photo as $suppr)
+								{
+									if (!in_array($suppr, $suppr_photo_path))
+									{
+										foreach($xml_photo->children() as $k=>$item)
+										{
+											if(($k == "picture") && ($item['url'][0] == $suppr))
+											{
+												$node = $xml_photo->xpath("/album/picture[@url='" . $suppr ."']");
+												$suppNode = dom_import_simplexml($node[0]);
+												$suppNode->parentNode->removeChild($suppNode);
+												$xml_photo->saveXML($xml_photo_path);
+											}
+										}
+									}
+								}
+								//Call miniature fonction param = $thumbnail_paths
+								
+								foreach ($thumbnail_paths as $path)
+								{
+										// Je retrouve le nom du fichier avec l'extension
+										$filename = basename($path);
+										$info = pathinfo($filename);
+										
+										// Je prend le nom du fichier sans l'extension qui ell est peut etre trouvee d'apres $info['extension']
+										//$filename =  basename($filename,'.'.$info['extension']);
+										
+										// J'essaye d'avoir tout le chemin jusqu'au dernier repertoire c-a-d sans le nom du fichier
+										$dirname = dirname($path);
+										
+										// Je cree mon objet source qui contient l'image originale
+										switch ($info['extension'])
+										{
+												case 'jpg':
+												case 'JPG': 
+														$source = imagecreatefromjpeg($path); 
+														break;
+												case 'png':
+												case 'PNG': 
+														$source = imagecreatefrompng($path); 
+														break;
+												case 'gif': 
+												case 'GIF':
+														$source = imagecreatefromgif($path); 
+														break;
+												default: 
+														$source = imagecreatefromjpeg($path);
+										}
+												
+										// Je prend les dimensions de l'image   
+										list($width, $height) = getimagesize($path); 
+										
+										// VALEURS A MODIFIER - CECI EST UN EXEMPLE
+										if ($width > $height)
+										{
+												$width_full = 800;
+												$height_full = 600;
+												$width_thumb = 80;
+												$height_thumb = 60;
+										}
+										else
+										{
+												$width_full = 600;
+												$height_full = 800;
+												$width_thumb = 60;
+												$height_thumb = 80;
+										}
+
+										// Creation des images de destination
+										$destination_full = imagecreatetruecolor($width_full, $height_full);
+										$destination_thumb = imagecreatetruecolor($width_thumb, $height_thumb);
+										
+										// Redimensionnement
+										imagecopyresized($destination_full, $source, 0, 0, 0, 0, $width_full, $height_full, $width, $height);
+										imagecopyresized($destination_thumb, $source, 0, 0, 0, 0, $width_thumb, $height_thumb, $width, $height);
+										
+										$dir_for_full = $dirname.'/full';
+										// On verifie l'existance du repertoire qui va contenir les images (full size) - On le cree s'il n'existe pas
+										if (!file_exists($dir_for_full))
+												mkdir($dir_for_full, 0755);
+												
+										$dir_for_thumbs = $dirname.'/thumbnails';
+										// On verifie l'existance du repertoire qui va contenir les images (thumbnails) - On le cree s'il n'existe pas
+										if (!file_exists($dir_for_thumbs))
+												mkdir($dir_for_thumbs, 0755);
+										
+										// Copie des images sur le disque
+										$path_full = $dir_for_full.'/'.$filename;
+										$path_thumb = $dir_for_thumbs.'/'.$filename;
+
+										switch ($info['extension'])
+										{
+												case 'jpg':
+												case 'JPG': 
+														imagejpeg($destination_full, $path_full, 100);
+														imagejpeg($destination_thumb, $path_thumb, 100); 
+														break;
+												case 'png':
+												case 'PNG': 
+														imagepng($destination_full, $path_full, 100);
+														imagepng($destination_thumb, $path_thumb, 100);
+														break;
+												case 'gif': 
+												case 'GIF':
+														imagegif($destination_full, $path_full);
+														imagegif($destination_thumb, $path_thumb);
+														break;
+												default:
+														imagejpeg($destination_full, $path_full, 100);
+														imagejpeg($destination_thumb, $path_thumb, 100); 
+										}
+										
+										// Destruction des objets temporaires
+										imagedestroy($destination_full);
+										imagedestroy($destination_thumb);
+										imagedestroy($source);
+								}
+								
+							} else {
+								//Ajout de l'xml photo si il n'éxiste pas
+								$root_node = "<album></album>";
+								$new_xml = new SimpleXMLElement($root_node);
+								$new_xml->AddAttribute('theme', 'nature');
+								$new_xml->AddAttribute('display', 'compact');
+								$new_xml->saveXML($xml_photo_path);
 							}
 						}
 					}
 				} else {
-					while (false !== ($album_rep = readdir($dir_user)))
-					{
-						if ($album_rep != "." && $album_rep != "..")
-						{
-							if (is_dir($user_path . "/" . $album_rep))
-							{
-								//add album
-								echo "Ajouter l'album: " . $album_rep . "<br>";
-							}
-						}
-					}
+					//Ajout de l'xml album si il n'éxiste pas
+					$root_node = "<collection></collection>";
+					$new_xml = new SimpleXMLElement($root_node);
+					$new_xml->saveXML($xml_album_path);
+					
 				}
 			}
 		}		
 	}
 	
-	
-	
-	//
-	/*sleep (30);
-}*/
-
-?>
+}
