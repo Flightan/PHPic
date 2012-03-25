@@ -51,8 +51,8 @@ foreach ($paths as $path)
 	$destination_thumb = imagecreatetruecolor($width_thumb, $height_thumb);
 	
 	// Redimensionnement
-	imagecopyresized($destination_full, $source, 0, 0, 0, 0, $width_full, $height_full, $width, $height);
-	imagecopyresized($destination_thumb, $source, 0, 0, 0, 0, $width_thumb, $height_thumb, $width, $height);
+	imagecopyresampled($destination_full, $source, 0, 0, 0, 0, $width_full, $height_full, $width, $height);
+	imagecopyresampled($destination_thumb, $source, 0, 0, 0, 0, $width_thumb, $height_thumb, $width, $height);
 	
 	$dir_for_full = $dirname.'/full';
 	// On verifie l'existance du repertoire qui va contenir les images (full size) - On le cree s'il n'existe pas
