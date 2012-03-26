@@ -45,7 +45,8 @@ class AlbumsController extends Zend_Controller_Action
     }
 	
     function drawImage($image) {
-    	return "<li><a class='fancybox' rel='group' href='/users/".$this->view->user."/".$this->view->album."/full/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>\n";
+    	return "<li><a class='fancybox' rel='group' href='/users/" . $this->view->user
+    		. "/" . $this->view->album . "/full/" . $image . "' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>\n";
     }
 
     public function indexAction()
@@ -86,7 +87,7 @@ class AlbumsController extends Zend_Controller_Action
     	{
     		$this->view->album = $album;
     		$this->view->html = "<div class='page-header'>
-									<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'> $user </a> / <a href='/album	/index/user/$user/title/$album' title='$album'>$album</a></h2>
+									<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'> $user </a> / <a href='/albums/index/user/$user/title/$album' title='$album'>$album</a></h2>
 									</div>
 									<div class='content'>";
     		$this->view->html .= "<ul class='polaroids_albums'>";
