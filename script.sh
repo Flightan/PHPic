@@ -1,6 +1,6 @@
 #!/bin/sh
 
-chmod -R 744 ./public
+chmod -R 755 ./public
 chmod 777 ./application/logins
 
 path=`pwd`
