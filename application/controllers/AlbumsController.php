@@ -92,7 +92,6 @@ class AlbumsController extends Zend_Controller_Action
     		$this->view->html .= "<ul class='polaroids_albums'>";
 			//parcourir le repertoire
 			$path .= "/$user/$album/";
-			echo $path;
     		$files = glob($path . "*.{[jJ][pP][gG],[jJ][pP][eE][gG],[gG][iI][fF],[pP][nN][gG]}", GLOB_BRACE);
  
     		foreach ($files as $photo)
