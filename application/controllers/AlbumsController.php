@@ -22,7 +22,7 @@ class AlbumsController extends Zend_Controller_Action
 	    		}
 	    	}
 	    }
-	    
+	    //print_r($albums);
 	    return $albums;
     }
     
@@ -39,8 +39,7 @@ class AlbumsController extends Zend_Controller_Action
     }
     
     function drawAlbum($album) {
-    	
-    	$imgSrc = $this->random_pic('users/' . $this->view->user . "/$album/thumbnails/");
+		$imgSrc = $this->random_pic('users/' . $this->view->user . "/$album/thumbnails/");
     	return "<li><a href='/albums/index/user/" . $this->view->user . "/title/$album' title='$album'><img src='/$imgSrc' alt='$album' /></a></li>";
     }
 	
@@ -48,8 +47,7 @@ class AlbumsController extends Zend_Controller_Action
     	return "<li><a class='fancybox' rel='group' href='/users/".$this->view->user."/".$this->view->album."/full/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>";
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {
     	//ICI faut lire le parametre pour savoir quel utilisateur on veut
     	$user = $this->getRequest()->getParam('user');
     	
@@ -86,7 +84,7 @@ class AlbumsController extends Zend_Controller_Action
     	{
     		$this->view->album = $album;
     		$this->view->html = "<div class='page-header'>
-									<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'> $user </a> / <a href='/album	/index/user/$user/title/$album' title='$album'>$album</a></h2>
+									<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'> $user </a> / <a href='/albums/index/user/$user/title/$album' title='$album'>$album</a></h2>
 									</div>
 									<div class='content'>";
     		$this->view->html .= "<ul class='polaroids_albums'>";
@@ -104,7 +102,4 @@ class AlbumsController extends Zend_Controller_Action
     								</div>";
     	}
     }
-
-
-
 }
