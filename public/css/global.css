@@ -1,12 +1,17 @@
 @CHARSET "UTF-8";
 
+html {
+	height: 100%;
+}
+
 body {
 	margin: 0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 13px;
 	line-height: 18px;
 	color: #333333;
-	background-color: #ffffff;
+	background-color: #f4f4f4;
+	height: 100%;
 }
 
 div {
@@ -17,13 +22,25 @@ div {
 	clear: both;
 }
 
-.container {
+.site-container {
+	background-color: #ffffff;
 	width: 970px;
-	margin-left: auto;
+	min-height: 100%; margin-left : auto;
 	margin-right: auto;
 	*zoom: 1;
-	position: relative;
 	padding: 0;
+	box-shadow: 0px 0px 10px #333333;
+	-moz-box-shadow: 0px 0px 10px #333333;
+	margin-left: auto; margin-right : auto; *zoom : 1; padding : 0;
+	box-shadow : 0px 0px 10px #333333; -moz-box-shadow : 0px 0px 10px
+	#333333;
+	-webkit-box-shadow: 0px 0px 10px #333333;
+}
+
+.container {
+	position: relative;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 .header {
@@ -31,7 +48,6 @@ div {
 	padding-left: 20px;
 	padding-right: 20px;
 	margin-bottom: 18px;
-	width: 970px;
 	margin-left: auto;
 	margin-right: auto;
 	*zoom: 1;
@@ -43,11 +59,15 @@ div {
 }
 
 footer {
+	position: absolute;
+	bottom: 0;
 	width: 970px;
 	margin-left: auto;
 	margin-right: auto;
 	*zoom: 1;
+	z-index: 100;
 	border-top: solid #333333;
+	background-color: #ffffff;
 }
 
 .header .brand:hover {
@@ -83,8 +103,18 @@ h2 a {
 	display: block;
 }
 
-p.profileLink {
+.profile {
+	margin-top: 20px;
 	float: right;
+}
+
+.profileLink a {
+	text-decoration: none;
+}
+
+p.profileLink {
+	font-size: 14px;
+	line-height: 18px;
 }
 
 ul.polaroids {
