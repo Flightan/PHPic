@@ -77,7 +77,9 @@ class AlbumsController extends Zend_Controller_Action
 	    		
 	    	//On ouvre le fichier XML correspondant et on le parse pour avoir la liste des albums
 	    	//exemple
-			$xml = simplexml_load_file($path . "/" . $user.'/album.xml');
+			//$xml = simplexml_load_file($path . "/" . $user.'/album.xml');
+			$xmlpath = realpath(APPLICATION_PATH . '/../users');
+			$xml = simplexml_load_file($xmlpath . '/album_'.$user.'.xml');
 	    	$this->albums = $this->parseXML($xml);
 	    	
 	        // action body
