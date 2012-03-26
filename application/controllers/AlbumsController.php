@@ -28,7 +28,7 @@ class AlbumsController extends Zend_Controller_Action
     
     function random_pic($dir)
     {
-    	$files = glob($dir . "*.{[jJ][pP][gG],[gG][iI][fF],[pP][nN][gG]}", GLOB_BRACE);
+    	$files = glob($dir . "*.{[jJ][pP][gG],[jJ][pP][eE][gG],[gG][iI][fF],[pP][nN][gG]}", GLOB_BRACE);
     	if (empty($files))
     	{
     		return "img/user.png";
@@ -39,35 +39,71 @@ class AlbumsController extends Zend_Controller_Action
     }
     
     function drawAlbum($album) {
+    	
     	$imgSrc = $this->random_pic('users/' . $this->view->user . "/$album/thumbnails/");
-    	return "<li><a href='/album/index/user/" . $this->view->user . "/title/$album' title='$album'><img src='/$imgSrc' alt='$album' /></a></li>";
+    	return "<li><a href='/albums/index/user/" . $this->view->user . "/title/$album' title='$album'><img src='/$imgSrc' alt='$album' /></a></li>";
+    }
+	
+    function drawImage($image) {
+    	return "<li><a class='fancybox' rel='group' href='/users/".$this->view->user."/".$this->view->album."/full/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>";
     }
 
     public function indexAction()
     {
     	//ICI faut lire le parametre pour savoir quel utilisateur on veut
     	$user = $this->getRequest()->getParam('user');
-		//L'url doit etre de la forme: http://phpic.localhost.local/albums/index/user/joseph
     	
-		//A enlever plus tard et gerer le cas ou pas de parametre dans l'url
-		if($user == '')
-			$user = 'joseph';
-		
+    	if($user == '')
+				$this->_helper->redirector('index', 'index');
 		$this->view->user = $user;
-    	//On ouvre le fichier XML correspondant et on le parse pour avoir la liste des albums
-    	//exemple
+		//XML correspondant au user
 		$path = realpath(APPLICATION_PATH . '/../public/users');
-    	$xml = simplexml_load_file($path . "/" . $user.'/album.xml');
-    	$this->albums = $this->parseXML($xml);
-    	
-        // action body
-        //ICI faudra gerer leur affichage
-    	$this->view->html = "<ul class='polaroids'>";
-    	foreach ($this->albums as $album)
+	    	
+		$album = $this->getRequest()->getParam('title');
+    	if (empty($album))
     	{
-    		$this->view->html .= $this->drawAlbum($album);
+			//L'url doit etre de la forme: http://phpic.localhost.local/albums/index/user/joseph
+	    		
+	    	//On ouvre le fichier XML correspondant et on le parse pour avoir la liste des albums
+	    	//exemple
+			$xml = simplexml_load_file($path . "/" . $user.'/album.xml');
+	    	$this->albums = $this->parseXML($xml);
+	    	
+	        // action body
+	        //ICI faudra gerer leur affichage
+	        $this->view->html = "<div class='page-header'>
+									<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'>$user</a></h2>
+									</div>
+									<div class='content'>";
+	    	$this->view->html .= "<ul class='polaroids'>";
+	    	foreach ($this->albums as $album)
+	    	{
+	    		$this->view->html .= $this->drawAlbum($album);
+	    	}
+	    	$this->view->html .= "</ul><br class='clear'/>";
     	}
-    	$this->view->html .= "</ul><br class='clear'/>";
+    	else 
+    	{
+    		$this->view->album = $album;
+    		$this->view->html = "<div class='page-header'>
+									<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'> $user </a> / <a href='/album	/index/user/$user/title/$album' title='$album'>$album</a></h2>
+									</div>
+									<div class='content'>";
+    		$this->view->html .= "<ul class='polaroids_albums'>";
+			//parcourir le repertoire
+			$path .= "/$user/$album/";
+			echo $path;
+    		$files = glob($path . "*.{[jJ][pP][gG],[jJ][pP][eE][gG],[gG][iI][fF],[pP][nN][gG]}", GLOB_BRACE);
+ 
+    		foreach ($files as $photo)
+    		{
+    			$image = explode("/", $photo);
+    			$last = sizeof($image)-1;
+    			$this->view->html .= $this->drawImage($image[$last]);
+    		}
+    		$this->view->html .= "</ul><br class='clear'/>
+    								</div>";
+    	}
     }
 
 
