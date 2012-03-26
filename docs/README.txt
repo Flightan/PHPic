@@ -14,13 +14,13 @@ Setting Up Your VHOST
 The following is a sample VHOST you might want to consider for your project.
 
 <VirtualHost *:80>
-   DocumentRoot "/home/florian/workspace/phpic/public"
+   DocumentRoot "/path/to/phpic/public"
    ServerName phpic.local
 
    # This should be omitted in the production environment
    SetEnv APPLICATION_ENV development
     
-   <Directory "/home/florian/workspace/phpic/public">
+   <Directory "/path/to/phpic/public">
        Options Indexes MultiViews FollowSymLinks
        AllowOverride All
        Order allow,deny
@@ -33,5 +33,19 @@ The following is a sample VHOST you might want to consider for your project.
 Setting Up Permissions and Crons
 ================================
 In order to set correct permissions to folders and to add the daemon to cron just execute "script.sh" once.
-sudo ./script.sh
-NB: You must be root to execute the script!
+sudo ./launch.sh
+
+
+Album scope
+===========
+Each album can be public, protected or private. In order to change the scope, you just have to modify the xml file.
+For example : 
+<?xml version="1.0"?>
+<collection>
+  <album title="winter_013" scope="public"/>
+  <album title="spring_013" scope="private">
+	<user name="florian"/>
+	<user name="camille"/>
+  </album>
+  <album title="summer_013" scope="protected"/>
+</collection>
