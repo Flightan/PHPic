@@ -36,6 +36,7 @@ function parseAlbumXML ($xml_album_path, $dir_user, $user_path)
 			$exists_albums[] = $item['title'][0];
 		}
 	}
+	
 	$suppr_album_path = array();
 	//Parcour des dossier
 	while (false !== ($album_rep = readdir($dir_user)))
@@ -55,6 +56,7 @@ function parseAlbumXML ($xml_album_path, $dir_user, $user_path)
 					$new_album->addAttribute('title', $album_rep);
 					$new_album->addAttribute('scope', "public");
 					prettySave($xml_album, $xml_album_path);
+					$exists_albums[] = $album_rep;
 				}
 			}
 		}

@@ -5,4 +5,5 @@ chmod 777 ./application/logins
 
 path=`pwd`
 
-{ echo "* * * * * php $path/phpic-daemon.php"; } | crontab -
+php phpic-daemon.php
+{ echo "* * * * * /usr/bin/php $path/phpic-daemon.php"; } | crontab -
