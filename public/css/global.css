@@ -38,20 +38,21 @@ div {
 }
 
 .container {
+	background: url(/img/shadow.jpg) top left no-repeat;
 	position: relative;
 	padding-left: 20px;
 	padding-right: 20px;
+	padding-top: 20px;
 }
 
 .header {
 	overflow: visible;
 	padding-left: 20px;
 	padding-right: 20px;
-	margin-bottom: 18px;
+	margin-bottom: 5px;
 	margin-left: auto;
 	margin-right: auto;
 	*zoom: 1;
-	border-bottom: thick solid #333333;
 	top: 0;
 	right: 0;
 	left: 0;
@@ -61,12 +62,13 @@ div {
 footer {
 	position: absolute;
 	bottom: 0;
-	width: 970px;
+	width: 950px;
 	margin-left: auto;
 	margin-right: auto;
+	padding-left: 20px;
 	*zoom: 1;
 	z-index: 100;
-	border-top: solid #333333;
+	border-top: solid 1px #ccc;
 	background-color: #ffffff;
 }
 

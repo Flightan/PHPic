@@ -45,12 +45,12 @@ class AlbumsController extends Zend_Controller_Action
     
     function drawAlbum($album) {
 		$imgSrc = $this->random_pic('users/' . $this->view->user . "/$album/thumbnails/");
-    	return "<li><a href='/albums/index/user/" . $this->view->user . "/title/$album' title='$album'><img src='/$imgSrc' alt='$album' /></a></li>";
+    	return "\t\t\t\t<li><a href='/albums/index/user/" . $this->view->user . "/title/$album' title='$album'><img src='/$imgSrc' alt='$album' /></a></li>\n";
 
     }
 	
     function drawImage($image) {
-    	return "<li><a class='fancybox' rel='group' href='/users/" . $this->view->user
+    	return "\t\t\t\t<li><a class='fancybox' rel='group' href='/users/" . $this->view->user
     		. "/" . $this->view->album . "/full/" . $image . "' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>\n";
     }
 
@@ -82,11 +82,11 @@ class AlbumsController extends Zend_Controller_Action
 	    	
 	        // action body
 	        //ICI faudra gerer leur affichage
-	        $this->view->html = "<div class='page-header'>
-									<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'>$user</a></h2>
-									</div>
-									<div class='content'>";
-	    	$this->view->html .= "<ul class='polaroids'>";
+	        $this->view->html = "<div class='page-header'>\n"
+									. "\t\t\t<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'>$user</a></h2>\n"
+									. "\t\t</div>\n"
+									. "\t\t<div class='content'>\n";
+	    	$this->view->html .= "\t\t\t<ul class='polaroids'>\n";
 	    	
 	    	foreach ($this->albums as $id=>$elt)
 	    	{
@@ -98,11 +98,11 @@ class AlbumsController extends Zend_Controller_Action
     	else 
     	{
     		$this->view->album = $album;
-    		$this->view->html = "<div class='page-header'>
-									<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'> $user </a> / <a href='/albums/index/user/$user/title/$album' title='$album'>$album</a></h2>
-									</div>
-									<div class='content'>";
-    		$this->view->html .= "<ul class='polaroids_albums'>";
+    		$this->view->html = "<div class='page-header'>\n"
+									. "\t\t\t<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'> $user </a> / <a href='/albums/index/user/$user/title/$album' title='$album'>$album</a></h2>\n"
+									. "\t\t</div>\n"
+									. "\t\t<div class='content'>\n";
+    		$this->view->html .= "\t\t\t<ul class='polaroids_albums'>";
 			//parcourir le repertoire
 			$path .= "/$user/$album/";
     		$files = glob($path . "*.{[jJ][pP][gG],[jJ][pP][eE][gG],[gG][iI][fF],[pP][nN][gG]}", GLOB_BRACE);
@@ -114,6 +114,6 @@ class AlbumsController extends Zend_Controller_Action
     			$this->view->html .= $this->drawImage($image[$last]);
     		}
     	}
-    	$this->view->html .= "</ul></div>";
+    	$this->view->html .= "\t\t\t</ul></div></div>";
     }
 }
