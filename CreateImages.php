@@ -3,24 +3,14 @@
 $paths = array();
 //$rpath = realpath(APPLICATION_PATH . '/../public/users');
 $rpath = './public/users';
-$paths[] = $rpath.'/caroline/spring_013/photo1.JPG';
-$paths[] = $rpath.'/caroline/spring_013/photo2.JPG';
-$paths[] = $rpath.'/caroline/summer_013/photo3.JPG';
-$paths[] = $rpath.'/caroline/summer_013/photo4.JPG';
-$paths[] = $rpath.'/caroline/winter_013/photo1.JPG';
-$paths[] = $rpath.'/caroline/winter_013/photo2.JPG';
-$paths[] = $rpath.'/gwenael/spring_014/photo1.JPG';
-$paths[] = $rpath.'/gwenael/spring_014/photo2.JPG';
-$paths[] = $rpath.'/gwenael/summer_014/photo1.JPG';
-$paths[] = $rpath.'/gwenael/summer_014/photo2.JPG';
-$paths[] = $rpath.'/gwenael/winter_014/photo1.JPG';
-$paths[] = $rpath.'/gwenael/winter_014/photo2.JPG';
-$paths[] = $rpath.'/jean-charle/spring_015/photo1.JPG';
-$paths[] = $rpath.'/jean-charle/spring_015/photo2.JPG';
-$paths[] = $rpath.'/jean-charle/summer_015/photo1.JPG';
-$paths[] = $rpath.'/jean-charle/summer_015/photo2.JPG';
-$paths[] = $rpath.'/jean-charle/winter_015/photo1.JPG';
-$paths[] = $rpath.'/jean-charle/winter_015/photo2.JPG';
+$paths[] = $rpath.'/caroline/spring_013/lac.jpg';
+$paths[] = $rpath.'/caroline/summer_013/another_bridge.jpg';
+$paths[] = $rpath.'/caroline/summer_013/bridge.jpg';
+$paths[] = $rpath.'/caroline/winter_013/boat.jpg';
+$paths[] = $rpath.'/gwenael/spring_014/banc.jpg';
+$paths[] = $rpath.'/jean-charle/summer_015/photo.jpg';
+$paths[] = $rpath.'/laurent/summer_016/cliffs.jpg';
+$paths[] = $rpath.'/mat/summer_017/cold.jpg';
 
 foreach ($paths as $path)
 {
@@ -35,18 +25,15 @@ foreach ($paths as $path)
 	$dirname = dirname($path);
 	
 	// Je cree mon objet source qui contient l'image originale
-	switch ($info['extension'])
+	switch (strtolower($info['extension']))
 	{
 		case 'jpg':
-		case 'JPG': 
 			$source = imagecreatefromjpeg($path); 
 			break;
 		case 'png':
-		case 'PNG': 
 			$source = imagecreatefrompng($path); 
 			break;
 		case 'gif': 
-		case 'GIF':
 			$source = imagecreatefromgif($path); 
 			break;
 		default: 
@@ -61,15 +48,15 @@ foreach ($paths as $path)
 	{
 		$width_full = 800;
 		$height_full = 600;
-		$width_thumb = 80;
-		$height_thumb = 60;
+		$width_thumb = 220;
+		$height_thumb = 165;
 	}
 	else
 	{
 		$width_full = 600;
 		$height_full = 800;
-		$width_thumb = 60;
-		$height_thumb = 80;
+		$width_thumb = 165;
+		$height_thumb = 220;
 	}
 
 	// Creation des images de destination
@@ -94,20 +81,17 @@ foreach ($paths as $path)
 	$path_full = $dir_for_full.'/'.$filename;
 	$path_thumb = $dir_for_thumbs.'/'.$filename;
 
-	switch ($info['extension'])
+	switch (strtolower($info['extension']))
 	{
 		case 'jpg':
-		case 'JPG': 
 			imagejpeg($destination_full, $path_full, 100);
 			imagejpeg($destination_thumb, $path_thumb, 100); 
 			break;
 		case 'png':
-		case 'PNG': 
 			imagepng($destination_full, $path_full, 100);
 			imagepng($destination_thumb, $path_thumb, 100);
 			break;
-		case 'gif': 
-		case 'GIF':
+		case 'gif':
 			imagegif($destination_full, $path_full);
 			imagegif($destination_thumb, $path_thumb);
 			break;
@@ -146,5 +130,3 @@ function fastimagecopyresampled (&$dst_image, $src_image, $dst_x, $dst_y, $src_x
   } else imagecopyresampled ($dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
   return true;
 }
-
-?>

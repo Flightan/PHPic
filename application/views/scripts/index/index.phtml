@@ -2,8 +2,22 @@
 
 //include APPLICATION_PATH.'/CreateImages.php';
 
-function drawUser($id) {	
-	return "<li><a href='/albums/index/user/$id' title='$id'><img src='/img/user.png' alt='$id' /></a></li>";
+function drawUser($id) {
+	$imgSrc = random_pic("users/$id/");
+	return "<li><a href='/albums/index/user/$id' title='$id'><img src='/$imgSrc' alt='$id' /></a></li>";
+}
+
+function random_pic($dir)
+{
+	$files = glob($dir . "summer*/*.{[jJ][pP][gG],[gG][iI][fF],[pP][nN][gG]}", GLOB_BRACE);
+
+	if (empty($files))
+	{
+		return "img/user.png";
+	}
+
+	$file = array_rand($files);
+	return $files[$file];
 }
 
 function drawIndex() {

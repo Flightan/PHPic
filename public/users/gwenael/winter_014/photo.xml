@@ -1,4 +1,0 @@
-<album theme="nature" display="compact"> 
-	<picture url="photo1.JPG" thumbnail=".thumbnails/photo1.jpg" /> 
-	<picture url="photo2.JPG" thumbnail=".thumbnails/photo2.jpg" /> 
-</album>

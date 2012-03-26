@@ -1,4 +1,4 @@
 <album theme="nature" display="compact"> 
-	<picture url="photo3.JPG" thumbnail=".thumbnails/photo1.jpg" /> 
-	<picture url="photo4.JPG" thumbnail=".thumbnails/photo2.jpg" /> 
+	<picture url="another_bridge.JPG" thumbnail=".thumbnails/another_bridge.jpg" /> 
+	<picture url="bridge.JPG" thumbnail=".thumbnails/bridge.jpg" /> 
 </album>

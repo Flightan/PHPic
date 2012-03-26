@@ -26,8 +26,21 @@ class AlbumsController extends Zend_Controller_Action
 	    return $albums;
     }
     
+    function random_pic($dir)
+    {
+    	$files = glob($dir . "*.{[jJ][pP][gG],[gG][iI][fF],[pP][nN][gG]}", GLOB_BRACE);
+    	if (empty($files))
+    	{
+    		return "img/user.png";
+    	}
+
+    	$file = array_rand($files);
+    	return $files[$file];
+    }
+    
     function drawAlbum($album) {
-    	return "<li><a href='/album/index/user/".$this->view->user."/title/$album' title='$album'><img src='/img/user.png' alt='$album' /></a></li>";
+    	$imgSrc = $this->random_pic('users/' . $this->view->user . "/$album/thumbnails/");
+    	return "<li><a href='/album/index/user/" . $this->view->user . "/title/$album' title='$album'><img src='/$imgSrc' alt='$album' /></a></li>";
     }
 
     public function indexAction()
