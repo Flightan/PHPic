@@ -6,7 +6,6 @@ class AlbumsController extends Zend_Controller_Action
 	
     public function init()
     {
-        $this->html = "TEST";
     }
     
 	protected function parseXML($xml)
