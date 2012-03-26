@@ -1,4 +1,5 @@
 <?php
+
 // Paths etant la liste des differents chemins
 $paths = array();
 //$rpath = realpath(APPLICATION_PATH . '/../public/users');
@@ -146,5 +147,3 @@ function fastimagecopyresampled (&$dst_image, $src_image, $dst_x, $dst_y, $src_x
   } else imagecopyresampled ($dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
   return true;
 }
-
-?>

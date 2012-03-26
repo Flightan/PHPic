@@ -1,6 +1,5 @@
 <collection> 
 	<album title="summer_016" scope="public"/> 
 	<album title="spring_016" scope="protected"/> 
-	<album title="winter_016" scope="private"> 
- </album> 
+	<album title="winter_016" scope="private"/> 
 </collection>

@@ -1,4 +1,5 @@
+<?xml version="1.0"?>
 <album theme="nature" display="compact"> 
-	<picture url="photo1.JPG" thumbnail=".thumbnails/photo1.jpg" /> 
-	<picture url="photo2.JPG" thumbnail=".thumbnails/photo2.jpg" /> 
-</album>
+	 
+	<picture url="photo2.JPG" thumbnail=".thumbnails/photo2.jpg"/> 
+<picture url="photo1.jpg" thumbnail=".thumbnails/photo1.jpg"/><picture url="photo3.jpg" thumbnail=".thumbnails/photo3.jpg"/></album>
