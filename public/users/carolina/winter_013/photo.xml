@@ -1,3 +1,4 @@
-<album theme="nature" display="compact"> 
-	<picture url="boat.jpg" thumbnail=".thumbnails/boat.jpg" />
+<?xml version="1.0"?>
+<album>
+  <picture url="boat.jpg"/>
 </album>
