@@ -12,17 +12,20 @@ class AlbumsController extends Zend_Controller_Action
 	protected function parseXML($xml)
     {
     	$albums = Array();
+    	$i = 0;
 	    if ($xml != false)
 	    {
 	    	foreach($xml->children() as $k=>$item)
-	    	{
+	    	{	
 	    		if($k == "album")
 	    		{
-	    			$albums[] = $item['title'][0];
+	    			$albums[$i]["title"] = $item['title'][0];
+	    			$albums[$i]["scope"] = $item['scope'][0];
 	    		}
+	    		$i++;
 	    	}
 	    }
-	    //print_r($albums);
+	   // print_r($albums);
 	    return $albums;
     }
     
@@ -49,6 +52,12 @@ class AlbumsController extends Zend_Controller_Action
     }
 
     public function indexAction() {
+    	//User loggé
+    	$auth = Zend_Auth::getInstance();
+    	if ($auth->hasIdentity()) {
+			$ident = $auth->getIdentity();
+			$identity = $ident["username"];
+    	}
     	//ICI faut lire le parametre pour savoir quel utilisateur on veut
     	$user = $this->getRequest()->getParam('user');
     	
@@ -56,8 +65,7 @@ class AlbumsController extends Zend_Controller_Action
 				$this->_helper->redirector('index', 'index');
 		$this->view->user = $user;
 		//XML correspondant au user
-		$path = realpath(APPLICATION_PATH . '/../public/users');
-	    	
+		$path = realpath(APPLICATION_PATH . '/../public/users');	    	
 		$album = $this->getRequest()->getParam('title');
     	if (empty($album))
     	{
@@ -75,9 +83,14 @@ class AlbumsController extends Zend_Controller_Action
 									</div>
 									<div class='content'>";
 	    	$this->view->html .= "<ul class='polaroids'>";
-	    	foreach ($this->albums as $album)
+	    /*	echo "<pre>";
+	    	print_r($this->albums);
+	    	echo "</pre>";
+	    	echo $user;*/
+	    	foreach ($this->albums as $id=>$elt)
 	    	{
-	    		$this->view->html .= $this->drawAlbum($album);
+	    		if ($elt['scope'] != 'protected' OR $identity == $user)
+	    			$this->view->html .= $this->drawAlbum($elt['title']);
 	    	}
 	    	$this->view->html .= "</ul><br class='clear'/>";
     	}
