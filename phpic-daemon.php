@@ -270,7 +270,8 @@ if ($dir = opendir($path_users))
 		$user_path = $path_users.'/'.$us;
 		if ($dir_user = opendir($user_path))
 		{
-			$xml_album_path = $user_path . "/album.xml";
+			//$xml_album_path = $user_path . "/album.xml";
+			$xml_album_path = getcwd() . '/users/album_'.$us.'.xml';
 			$exists_albums = array();
 			//Test si le xml album exist, parcour du xml
 			if (!file_exists($xml_album_path))
