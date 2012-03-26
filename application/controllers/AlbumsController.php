@@ -40,7 +40,7 @@ class AlbumsController extends Zend_Controller_Action
     
     function drawAlbum($album) {
     	$imgSrc = $this->random_pic('users/' . $this->view->user . "/$album/thumbnails/");
-    	return "<li><a href='/album/index/user/" . $this->view->user . "/title/$album' title='$album'><img src='/$imgSrc' alt='$album' /></a></li>";
+    	return "<li><a href='/album/index/user/" . $this->view->user . "/title/$album' title='$album'><img src='/$imgSrc' alt='$album' /></a></li>\n";
     }
 
     public function indexAction()

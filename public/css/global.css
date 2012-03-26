@@ -18,7 +18,7 @@ div {
 }
 
 .container {
-	width: 940px;
+	width: 970px;
 	margin-left: auto;
 	margin-right: auto;
 	*zoom: 1;
@@ -31,7 +31,7 @@ div {
 	padding-left: 20px;
 	padding-right: 20px;
 	margin-bottom: 18px;
-	width: 940px;
+	width: 970px;
 	margin-left: auto;
 	margin-right: auto;
 	*zoom: 1;
@@ -43,7 +43,7 @@ div {
 }
 
 footer {
-	width: 980px;
+	width: 970px;
 	margin-left: auto;
 	margin-right: auto;
 	*zoom: 1;
@@ -88,7 +88,10 @@ p.profileLink {
 }
 
 ul.polaroids {
+	width: 970px;
 	margin: 0 0 18px -30px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 ul.polaroids li {
@@ -103,7 +106,6 @@ ul.polaroids a {
 	width: auto;
 	padding: 10px 10px 15px;
 	text-align: center;
-	
 	text-decoration: none;
 	color: #333;
 	font-size: 18px;
@@ -117,42 +119,53 @@ ul.polaroids a {
 ul.polaroids img {
 	display: block;
 	width: 165px;
-	margin-bottom: 12px;
+	margin-bottom: 10px;
 }
 
 ul.polaroids a:after {
 	content: attr(title);
 }
 
+/* By default, we tilt all our images -2 degrees */
+ul.polaroids a {
+	-webkit-transform: rotate(-2deg);
+	-moz-transform: rotate(-2deg);
+}
+
+/* Rotate all even images 2 degrees */
 ul.polaroids li:nth-child(even) a {
 	-webkit-transform: rotate(2deg);
 	-moz-transform: rotate(2deg);
 }
 
+/* Don't rotate every third image, but offset its position */
 ul.polaroids li:nth-child(3n) a {
 	-webkit-transform: none;
+	-moz-transform: none;
 	position: relative;
 	top: -5px;
-	-moz-transform: none;
 }
 
+/* Rotate every fifth image by 5 degrees and offset it */
 ul.polaroids li:nth-child(5n) a {
-	-webkit-transform: rotate(4deg);
+	-webkit-transform: rotate(5deg);
+	-moz-transform: rotate(5deg);
 	position: relative;
 	right: 5px;
-	-moz-transform: rotate(4deg);
 }
 
+/* Keep default rotate for every eighth, but offset it */
 ul.polaroids li:nth-child(8n) a {
 	position: relative;
-	right: 5px;
 	top: 8px;
+	right: 5px;
 }
 
+/* Keep default rotate for every eleventh, but offset it */
 ul.polaroids li:nth-child(11n) a {
 	position: relative;
-	left: -5px;
 	top: 3px;
+	left: -5px;
 }
 
 ul.polaroids li.messy a {
@@ -172,9 +185,10 @@ ul.polaroids li a:hover {
 }
 
 /* Polaroids pour albums */
-
 ul.polaroids_albums {
 	margin: 0 0 18px -30px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 ul.polaroids_albums li {
@@ -189,7 +203,6 @@ ul.polaroids_albums a {
 	width: auto;
 	padding: 5px 5px 5px;
 	text-align: center;
-	
 	text-decoration: none;
 	color: #333;
 	font-size: 18px;

@@ -4,12 +4,12 @@
 
 function drawUser($id) {
 	$imgSrc = random_pic("users/$id/");
-	return "<li><a href='/albums/index/user/$id' title='$id'><img src='/$imgSrc' alt='$id' /></a></li>";
+	return "<li><a href='/albums/index/user/$id' title='$id'><img src='/$imgSrc' alt='$id' /></a></li>\n";
 }
 
 function random_pic($dir)
 {
-	$files = glob($dir . "summer*/*.{[jJ][pP][gG],[gG][iI][fF],[pP][nN][gG]}", GLOB_BRACE);
+	$files = glob($dir . "*/thumbnails/*.{[jJ][pP][gG],[gG][iI][fF],[pP][nN][gG]}", GLOB_BRACE);
 
 	if (empty($files))
 	{

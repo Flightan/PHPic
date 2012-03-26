@@ -2,8 +2,8 @@
 
 // Paths etant la liste des differents chemins
 $paths = array();
-//$rpath = realpath(APPLICATION_PATH . '/../public/users');
-$rpath = './public/users';
+
+$rpath = 'public/users';
 $paths[] = $rpath.'/caroline/spring_013/lac.jpg';
 $paths[] = $rpath.'/caroline/summer_013/another_bridge.jpg';
 $paths[] = $rpath.'/caroline/summer_013/bridge.jpg';
@@ -29,6 +29,7 @@ foreach ($paths as $path)
 	switch (strtolower($info['extension']))
 	{
 		case 'jpg':
+		case 'jpeg':
 			$source = imagecreatefromjpeg($path); 
 			break;
 		case 'png':
@@ -51,18 +52,22 @@ foreach ($paths as $path)
 		$height_full = 600;
 		$width_thumb = 220;
 		$height_thumb = 165;
+		$cropWidth_thumb = 220;
+		$cropHeight_thumb = 165;
 	}
 	else
 	{
 		$width_full = 600;
 		$height_full = 800;
-		$width_thumb = 165;
-		$height_thumb = 220;
+		$width_thumb = 250;
+		$height_thumb = 330;
+		$cropWidth_thumb = 220;
+		$cropHeight_thumb = 165;
 	}
 
 	// Creation des images de destination
 	$destination_full = imagecreatetruecolor($width_full, $height_full);
-	$destination_thumb = imagecreatetruecolor($width_thumb, $height_thumb);
+	$destination_thumb = imagecreatetruecolor($cropWidth_thumb, $cropHeight_thumb);
 	
 	// Redimensionnement
 	imagecopyresized($destination_full, $source, 0, 0, 0, 0, $width_full, $height_full, $width, $height);
