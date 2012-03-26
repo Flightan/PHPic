@@ -120,7 +120,7 @@ function parseAlbumXML ($xml_album_path)
 								} else {
 									//add photo dans la liste des chemins pour les miniature
 									$new_photo = $xml_photo->addChild('picture');
-									$new_photo->addAttribute('url', $photo_rep);								
+									$new_photo->addAttribute('url', $photo_rep);
 									prettySave($xml_photo, $xml_photo_path);
 									$thumbnail_paths[] = $album_path . "/" . $photo_rep;
 								}
@@ -179,7 +179,6 @@ function parseAlbumXML ($xml_album_path)
 					// Je prend les dimensions de l'image
 					list($width, $height) = getimagesize($path);
 
-					
 					if ($width > $height)
 					{
 						$width_full = 800;
