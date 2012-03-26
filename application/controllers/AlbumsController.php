@@ -6,7 +6,6 @@ class AlbumsController extends Zend_Controller_Action
 	
     public function init()
     {
-        $this->html = "TEST";
     }
     
 	protected function parseXML($xml)
@@ -51,7 +50,8 @@ class AlbumsController extends Zend_Controller_Action
     }
 	
     function drawImage($image) {
-    	return "<li><a class='fancybox' rel='group' href='/users/".$this->view->user."/".$this->view->album."/full/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>\n";
+    	return "<li><a class='fancybox' rel='group' href='/users/" . $this->view->user
+    		. "/" . $this->view->album . "/full/" . $image . "' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>\n";
     }
 
     public function indexAction() {
