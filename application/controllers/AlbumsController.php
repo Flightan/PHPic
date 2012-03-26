@@ -83,7 +83,7 @@ class AlbumsController extends Zend_Controller_Action
 	        // action body
 	        //ICI faudra gerer leur affichage
 	        $this->view->html = "<div class='page-header'>\n"
-									. "\t\t\t<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'>$user</a></h2>\n"
+									. "\t\t\t<h2><a href='/' title='index'>Home</a> / <a href='/albums/index/user/$user' title='$user'>$user</a></h2>\n"
 									. "\t\t</div>\n"
 									. "\t\t<div class='content'>\n";
 	    	$this->view->html .= "\t\t\t<ul class='polaroids'>\n";
@@ -99,7 +99,7 @@ class AlbumsController extends Zend_Controller_Action
     	{
     		$this->view->album = $album;
     		$this->view->html = "<div class='page-header'>\n"
-									. "\t\t\t<h2><a href='/' title='index'>home</a> / <a href='/albums/index/user/$user' title='$user'> $user </a> / <a href='/albums/index/user/$user/title/$album' title='$album'>$album</a></h2>\n"
+									. "\t\t\t<h2><a href='/' title='index'>Home</a> / <a href='/albums/index/user/$user' title='$user'> $user </a> / <a href='/albums/index/user/$user/title/$album' title='$album'>$album</a></h2>\n"
 									. "\t\t</div>\n"
 									. "\t\t<div class='content'>\n";
     		$this->view->html .= "\t\t\t<ul class='polaroids_albums'>";
