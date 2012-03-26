@@ -28,3 +28,10 @@ The following is a sample VHOST you might want to consider for your project.
    </Directory>
     
 </VirtualHost>
+
+
+Setting Up Permissions and Crons
+================================
+In order to set correct permissions to folders and to add the daemon to cron just execute "script.sh" once.
+sudo ./script.sh
+NB: You must be root to execute the script!

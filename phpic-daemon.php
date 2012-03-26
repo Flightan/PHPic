@@ -186,22 +186,26 @@ if ($dir = opendir($doc_user))
 									// VALEURS A MODIFIER - CECI EST UN EXEMPLE
 									if ($width > $height)
 									{
-											$width_full = 800;
-											$height_full = 600;
-											$width_thumb = 80;
-											$height_thumb = 60;
+										$width_full = 800;
+										$height_full = 600;
+										$width_thumb = 220;
+										$height_thumb = 165;
+										$cropWidth_thumb = 220;
+										$cropHeight_thumb = 165;
 									}
 									else
 									{
-											$width_full = 600;
-											$height_full = 800;
-											$width_thumb = 60;
-											$height_thumb = 80;
+										$width_full = 600;
+										$height_full = 800;
+										$width_thumb = 250;
+										$height_thumb = 330;
+										$cropWidth_thumb = 220;
+										$cropHeight_thumb = 165;
 									}
-
+								
 									// Creation des images de destination
 									$destination_full = imagecreatetruecolor($width_full, $height_full);
-									$destination_thumb = imagecreatetruecolor($width_thumb, $height_thumb);
+									$destination_thumb = imagecreatetruecolor($cropWidth_thumb, $cropHeight_thumb);
 									
 									// Redimensionnement
 									imagecopyresized($destination_full, $source, 0, 0, 0, 0, $width_full, $height_full, $width, $height);
