@@ -1,10 +1,8 @@
 #!/bin/sh
 
-chmod -R 777 ./public/users
-#write out current crontab
-crontab -l > mycron
-#echo new cron into cron file
-echo "* * * * * php ./CreateImages.php" >> mycron
-#install new cron file
-crontab mycron
-rm mycron
+chmod -R 777 ./public
+
+crontab -l > file
+echo '* * * * * php ./phpic-daemon.php >/dev/null 2>&1' >> file
+crontab file
+rm file
