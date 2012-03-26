@@ -1,6 +1,7 @@
 #!/bin/sh
 
-chmod -R 777 ./public
+chmod -R 744 ./public
+chmod 777 ./application/logins
 
 path=pwd
 crontab -l > file
