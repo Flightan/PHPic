@@ -11,17 +11,23 @@ class AlbumsController extends Zend_Controller_Action
 	protected function parseXML($xml)
     {
     	$albums = Array();
+    	$i = 0;
 	    if ($xml != false)
 	    {
-	    	foreach($xml->children() as $k=>$item)
-	    	{
-	    		if($k == "album")
-	    		{
-	    			$albums[] = $item['title'][0];
-	    		}
+	    	foreach($xml as $album)
+	    	{	
+	    		//print_r($album);
+    			$i++;
+    			$albums[$i]["title"] = $album['title'];
+    			$albums[$i]["scope"] = $album['scope'];
+    		
+    			if ($album['scope'] == "private")
+    			{
+    				foreach ($album->user as $user)
+    					$albums[$i]['user'][] = "".$user['name'];
+    			}
 	    	}
 	    }
-	    //print_r($albums);
 	    return $albums;
     }
     
@@ -49,6 +55,13 @@ class AlbumsController extends Zend_Controller_Action
     }
 
     public function indexAction() {
+    	//User loggé
+    	$identity = "";
+    	$auth = Zend_Auth::getInstance();
+    	if ($auth->hasIdentity()) {
+			$ident = $auth->getIdentity();
+			$identity = $ident["username"];
+    	}
     	//ICI faut lire le parametre pour savoir quel utilisateur on veut
     	$user = $this->getRequest()->getParam('user');
     	
@@ -56,8 +69,7 @@ class AlbumsController extends Zend_Controller_Action
 				$this->_helper->redirector('index', 'index');
 		$this->view->user = $user;
 		//XML correspondant au user
-		$path = realpath(APPLICATION_PATH . '/../public/users');
-	    	
+		$path = realpath(APPLICATION_PATH . '/../public/users');	    	
 		$album = $this->getRequest()->getParam('title');
     	if (empty($album))
     	{
@@ -75,9 +87,12 @@ class AlbumsController extends Zend_Controller_Action
 									</div>
 									<div class='content'>";
 	    	$this->view->html .= "<ul class='polaroids'>";
-	    	foreach ($this->albums as $album)
+	    	
+	    	foreach ($this->albums as $id=>$elt)
 	    	{
-	    		$this->view->html .= $this->drawAlbum($album);
+	    		if ($elt['scope'] == 'public' OR $identity == $user OR (isset($elt['user']) AND in_array($identity, $elt['user'])))
+	    			$this->view->html .= $this->drawAlbum($elt['title']);
+	    		
 	    	}
     	}
     	else 
@@ -99,7 +114,6 @@ class AlbumsController extends Zend_Controller_Action
     			$this->view->html .= $this->drawImage($image[$last]);
     		}
     	}
-    	$this->view->html .= "</ul>
-    								</div>";
+    	$this->view->html .= "</ul></div>";
     }
 }
