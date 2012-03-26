@@ -41,10 +41,11 @@ class AlbumsController extends Zend_Controller_Action
     function drawAlbum($album) {
 		$imgSrc = $this->random_pic('users/' . $this->view->user . "/$album/thumbnails/");
     	return "<li><a href='/albums/index/user/" . $this->view->user . "/title/$album' title='$album'><img src='/$imgSrc' alt='$album' /></a></li>";
+
     }
 	
     function drawImage($image) {
-    	return "<li><a class='fancybox' rel='group' href='/users/".$this->view->user."/".$this->view->album."/full/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>";
+    	return "<li><a class='fancybox' rel='group' href='/users/".$this->view->user."/".$this->view->album."/full/".$image."' title='$image'><img src='/users/".$this->view->user."/".$this->view->album."/thumbnails/".$image."' alt='$image' /></a></li>\n";
     }
 
     public function indexAction() {
