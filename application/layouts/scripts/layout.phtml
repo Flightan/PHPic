@@ -12,16 +12,21 @@ echo $this->headScript()->appendFile('/js/jquery.fancybox.pack.js', $type = 'tex
 
 </head>
 <body>
-<div class="header">
-	<a class="brand" href="/">PHPic</a>
-<?php echo $this->profileLink() ?>
-<br class='clear'/>
-</div>
-<div class="container">
-<?php echo $this->layout()->content ?>
-<footer>
-	<p>&copy; PHPic 2012</p>
-</footer>
+<div class="site-container">
+	<div class="header">
+		<a class="brand" href="/"><img src="/img/logo.png" alt="PHPic"/></a>
+		<div class="profile">
+	<?php echo $this->profileLink() ?>
+		</div>
+	<br class='clear'/>
+	</div>
+	<div class="container">
+		<?php echo $this->layout()->content ?>
+		<br class='clear'/>
+		<footer>
+			<p>&copy; PHPic 2012</p>
+		</footer>
+	</div>
 </div>
 </body>
 </html>

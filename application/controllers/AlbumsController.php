@@ -79,7 +79,6 @@ class AlbumsController extends Zend_Controller_Action
 	    	{
 	    		$this->view->html .= $this->drawAlbum($album);
 	    	}
-	    	$this->view->html .= "</ul><br class='clear'/>";
     	}
     	else 
     	{
@@ -99,8 +98,8 @@ class AlbumsController extends Zend_Controller_Action
     			$last = sizeof($image)-1;
     			$this->view->html .= $this->drawImage($image[$last]);
     		}
-    		$this->view->html .= "</ul><br class='clear'/>
-    								</div>";
     	}
+    	$this->view->html .= "</ul>
+    								</div>";
     }
 }
