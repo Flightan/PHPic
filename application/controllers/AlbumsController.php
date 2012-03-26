@@ -15,17 +15,20 @@ class AlbumsController extends Zend_Controller_Action
     	$i = 0;
 	    if ($xml != false)
 	    {
-	    	foreach($xml->children() as $k=>$item)
+	    	foreach($xml as $album)
 	    	{	
-	    		if($k == "album")
-	    		{
-	    			$albums[$i]["title"] = $item['title'][0];
-	    			$albums[$i]["scope"] = $item['scope'][0];
-	    		}
-	    		$i++;
+	    		//print_r($album);
+    			$i++;
+    			$albums[$i]["title"] = $album['title'];
+    			$albums[$i]["scope"] = $album['scope'];
+    		
+    			if ($album['scope'] == "private")
+    			{
+    				foreach ($album->user as $user)
+    					$albums[$i]['user'][] = "".$user['name'];
+    			}
 	    	}
 	    }
-	   // print_r($albums);
 	    return $albums;
     }
     
@@ -53,6 +56,7 @@ class AlbumsController extends Zend_Controller_Action
 
     public function indexAction() {
     	//User loggé
+    	$identity = "";
     	$auth = Zend_Auth::getInstance();
     	if ($auth->hasIdentity()) {
 			$ident = $auth->getIdentity();
@@ -83,16 +87,13 @@ class AlbumsController extends Zend_Controller_Action
 									</div>
 									<div class='content'>";
 	    	$this->view->html .= "<ul class='polaroids'>";
-	    /*	echo "<pre>";
-	    	print_r($this->albums);
-	    	echo "</pre>";
-	    	echo $user;*/
+	    	
 	    	foreach ($this->albums as $id=>$elt)
 	    	{
-	    		if ($elt['scope'] != 'protected' OR $identity == $user)
+	    		if ($elt['scope'] == 'public' OR $identity == $user OR (isset($elt['user']) AND in_array($identity, $elt['user'])))
 	    			$this->view->html .= $this->drawAlbum($elt['title']);
+	    		
 	    	}
-	    	$this->view->html .= "</ul><br class='clear'/>";
     	}
     	else 
     	{
@@ -112,8 +113,7 @@ class AlbumsController extends Zend_Controller_Action
     			$last = sizeof($image)-1;
     			$this->view->html .= $this->drawImage($image[$last]);
     		}
-    		$this->view->html .= "</ul><br class='clear'/>
-    								</div>";
     	}
+    	$this->view->html .= "</ul></div>";
     }
 }
