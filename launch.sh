@@ -1,8 +1,10 @@
 #!/bin/bash
 
 chmod -R 755 ./public
-chmod 777 ./application/logins
-mkdir ./users
+chmod 555 ./application/logins
 
-path=`pwd`
-{ echo "* * * * * /usr/bin/php $path/phpic-daemon.php"; } | crontab -
+#Execution du script instantane
+php phpic-daemon.php
+
+#Utilisation de crontab pour gere l'appel toute les minutes
+{ echo "* * * * * php 'phpic-daemon.php'"; } | crontab -
