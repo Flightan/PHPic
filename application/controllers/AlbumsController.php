@@ -76,14 +76,10 @@ class AlbumsController extends Zend_Controller_Action
 			//L'url doit etre de la forme: http://phpic.localhost.local/albums/index/user/joseph
 	    		
 	    	//On ouvre le fichier XML correspondant et on le parse pour avoir la liste des albums
-	    	//exemple
-			//$xml = simplexml_load_file($path . "/" . $user.'/album.xml');
-			$xmlpath = realpath(APPLICATION_PATH . '/../users');
+			$xmlpath = realpath(APPLICATION_PATH . '/../.config');
 			$xml = simplexml_load_file($xmlpath . '/album_'.$user.'.xml');
 	    	$this->albums = $this->parseXML($xml);
 	    	
-	        // action body
-	        //ICI faudra gerer leur affichage
 	        $this->view->html = "<div class='page-header'>\n"
 									. "\t\t\t<h2><a href='/' title='index'>Home</a> / <a href='/albums/index/user/$user' title='$user'>$user</a></h2>\n"
 									. "\t\t</div>\n"
