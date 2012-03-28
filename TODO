@@ -1,0 +1,12 @@
+Design:
+	Add a new visual for 'protected' and 'private'
+	Add a shadow above of the footer when a user scrolls
+
+Conception:
+	Refactor the code to allow an easy change to the daemon
+	Rewrite the daemon with python --maybe
+	Create a config file (possibly an install script)
+	Stop using fixed height and width on resize to not mess up photos not 2:3
+	Add a "Download the original" link
+	Write a form to change from public to protected and private
+	

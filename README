@@ -1,0 +1,51 @@
+README
+======
+
+This directory should be used to place project specfic documentation including
+but not limited to project notes, generated API/phpdoc documentation, or 
+manual files generated or hand written.  Ideally, this directory would remain
+in your development environment only and should not be deployed with your
+application to it's final production location.
+
+
+Setting Up Your VHOST
+=====================
+
+The following is a sample VHOST you might want to consider for your project.
+
+<VirtualHost *:80>
+   DocumentRoot "/path/to/phpic/public"
+   ServerName phpic.local
+
+   # This should be omitted in the production environment
+   SetEnv APPLICATION_ENV development
+    
+   <Directory "/path/to/phpic/public">
+       Options Indexes MultiViews FollowSymLinks
+       AllowOverride All
+       Order allow,deny
+       Allow from all
+   </Directory>
+    
+</VirtualHost>
+
+
+Setting Up Permissions and Crons
+================================
+In order to set correct permissions to folders and to add the daemon to cron just execute "script.sh" once.
+sudo ./launch.sh
+
+
+Album scope
+===========
+Each album can be public, protected or private. In order to change the scope, you just have to modify the xml file.
+For example : 
+<?xml version="1.0"?>
+<collection>
+  <album title="winter_013" scope="public"/>
+  <album title="spring_013" scope="private">
+	<user name="florian"/>
+	<user name="camille"/>
+  </album>
+  <album title="summer_013" scope="protected"/>
+</collection>
